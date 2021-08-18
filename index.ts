@@ -3,8 +3,8 @@
 // 读取当前环境
 const modeIndex = process.argv.findIndex(v => v === '--mode');
 const currentMode = modeIndex >= 0 ? process.argv[modeIndex + 1] : undefined;
-require("dotenv").config(currentMode && {path: require('path').resolve(process.cwd(), `.env.${currentMode}`)});
-console.log('当前环境为:', currentMode);
+require("dotenv").config({path: require('path').resolve(process.cwd(), `.env${currentMode ? `.${currentMode}` : ''}`)});
+console.log('当前环境为:', currentMode || '默认（.env）');
 if (!process.env.OSS_TAG) {
   console.log('未设置 OSS_TAG 环境变量');
   process.exit(0);
