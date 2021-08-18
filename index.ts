@@ -3,7 +3,7 @@
 // 读取当前环境
 const modeIndex = process.argv.findIndex(v => v === '--mode');
 const currentMode = modeIndex >= 0 ? process.argv[modeIndex + 1] : undefined;
-require("dotenv").config(currentMode && {path: require('path').resolve(__dirname, `.env.${currentMode}`)});
+require("dotenv").config(currentMode && {path: require('path').resolve(process.cwd(), `.env.${currentMode}`)});
 console.log('当前环境为:', currentMode);
 if (!process.env.OSS_TAG) {
   console.log('未设置 OSS_TAG 环境变量');
@@ -25,6 +25,7 @@ getRemoteTags().stdout.on('end', () => {
     console.log('当前最新值为:', latestTag);
     const array = latestTag.split('.');
     array.splice(-1, 1, (Number(array.slice(-1)) + 1).toString());
+    console.log('即将发布为:', array.join('.'));
     getAddTag(array.join('.')).stdout.on('end', () => {
       console.log('新增成功~');
       getPushTag().stdout.on('end', () => {
