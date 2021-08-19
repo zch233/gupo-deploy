@@ -32,6 +32,10 @@ getRemoteTags().stdout.on('end', function () {
             getPushTag().stdout.on('end', function () {
                 console.log('发布成功~');
             });
+            getPushTag().stderr.on('data', function (chunk) {
+                console.log('发布失败~');
+                console.log('错误信息', chunk.toString());
+            });
         });
     });
 });
