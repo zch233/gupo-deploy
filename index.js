@@ -4,7 +4,7 @@ var argTagIndex = process.argv.findIndex(function (v) { return v === '--oss_tag'
 var argMode = argModeIndex >= 0 ? process.argv[argModeIndex + 1] : undefined;
 var argTag = argTagIndex >= 0 ? process.argv[argTagIndex + 1] : undefined;
 require("dotenv").config({ path: require('path').resolve(process.cwd(), ".env" + (argMode ? "." + argMode : '')) });
-console.log('当前环境为:', argTag || '默认（.env）');
+console.log('当前环境为:', argMode || '默认（.env）');
 var currentTag = argTag || process.env.OSS_TAG;
 if (!currentTag) {
     console.log('未设置 OSS_TAG 环境变量');
@@ -32,9 +32,10 @@ getRemoteTags().stdout.on('end', function () {
             getPushTag().stdout.on('end', function () {
                 console.log('发布成功~');
             });
-            getPushTag().stderr.on('data', function (chunk) {
+            getPushTag().on('error', function (chunk) {
                 console.log('发布失败~');
-                console.log('错误信息', chunk.toString());
+                console.log('请手动运行 `git push --tags`');
+                console.log('错误信息:', chunk.toString());
             });
         });
     });
