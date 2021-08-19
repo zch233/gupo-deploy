@@ -37,9 +37,10 @@ getRemoteTags().stdout.on('end', () => {
       getPushTag().stdout.on('end', () => {
         console.log('发布成功~');
       });
-      getPushTag().stderr.on('data', (chunk) => {
+      getPushTag().on('error', (chunk) => {
         console.log('发布失败~');
-        console.log('错误信息', chunk.toString());
+        console.log('请手动运行 `git push --tags`');
+        console.log('错误信息:', chunk.toString());
       });
     });
   });
