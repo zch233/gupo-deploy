@@ -23,9 +23,11 @@ const getPushTag = () => spawn('git', ['push', '--tags']);
 
 getRemoteTags().stdout.on('end', () => {
   console.log('拉取成功~');
-  getLatestTags().stdout.on('data', chunk => {
+  let gitTagData = ''
+  getLatestTags().stdout.on('data', chunk => gitTagData += chunk.toString());
+  getLatestTags().stdout.on('end', () => {
     console.log('读取成功~');
-    const latestTag = chunk.toString().split('\n')[0] || `${currentTag}-v0.0.0`;
+    const latestTag = gitTagData.split('\n')[0] || `${currentTag}0.0.0`;
     console.log('当前最新值为:', latestTag);
     const array = latestTag.split('.');
     array.splice(-1, 1, (Number(array.slice(-1)) + 1).toString());

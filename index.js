@@ -18,9 +18,11 @@ var getAddTag = function (version) { return spawn('git', ['tag', '-a', version, 
 var getPushTag = function () { return spawn('git', ['push', '--tags']); };
 getRemoteTags().stdout.on('end', function () {
     console.log('拉取成功~');
-    getLatestTags().stdout.on('data', function (chunk) {
+    var gitTagData = '';
+    getLatestTags().stdout.on('data', function (chunk) { return gitTagData += chunk.toString(); });
+    getLatestTags().stdout.on('end', function () {
         console.log('读取成功~');
-        var latestTag = chunk.toString().split('\n')[0] || currentTag + "-v0.0.0";
+        var latestTag = gitTagData.split('\n')[0] || currentTag + "0.0.0";
         console.log('当前最新值为:', latestTag);
         var array = latestTag.split('.');
         array.splice(-1, 1, (Number(array.slice(-1)) + 1).toString());
