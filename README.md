@@ -4,7 +4,7 @@
 ```
 默认读取环境变量(.env)中的 `OSS_TAG` 作为标签，
 例如 OSS_TAG=oss-test-v // OSS_TAG=oss-test-v
-自动打下的标签则为 `oss-test-v1.0.1`
+自动打下的标签则为 `oss-test-v1.0.1` // 若上一次的为 oss-test-v1.0.0
 每次将在末位版本号 `+1`
 ```
 
