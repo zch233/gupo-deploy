@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 import { getLatestTag, getLatestTags, getRemoteTags, publish } from './lib';
 
 const isQuicklyMode = process.argv.findIndex(v => v === '-ss') >= 0;
@@ -25,7 +26,12 @@ if (isQuicklyMode) {
   require("dotenv").config({path: require('path').resolve(process.cwd(), `.env${argMode ? `.${argMode}` : ''}`)});
   console.log('当前环境为:', argMode || '默认（.env）');
 
-  const currentTag = argTag || process.env.OSS_TAG
+  let currentTag = argTag || process.env.OSS_TAG
+
+  if (!currentTag) {
+    require("dotenv").config({path: require('path').resolve(process.cwd(), '.env.development')});
+    currentTag = process.env.OSS_TAG
+  }
 
   if (!currentTag) {
     console.log('未设置 OSS_TAG 环境变量');

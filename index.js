@@ -28,6 +28,10 @@ else {
     console.log('当前环境为:', argMode || '默认（.env）');
     var currentTag_1 = argTag || process.env.OSS_TAG;
     if (!currentTag_1) {
+        require("dotenv").config({ path: require('path').resolve(process.cwd(), '.env.development') });
+        currentTag_1 = process.env.OSS_TAG;
+    }
+    if (!currentTag_1) {
         console.log('未设置 OSS_TAG 环境变量');
         process.exit(0);
     }
