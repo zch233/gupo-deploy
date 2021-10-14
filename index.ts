@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
-import { getLatestTag, getLatestTags, getRemoteTags, publish } from './lib';
+import { getLatestTag, getLatestTags, getRemoteTags, publish, pushCode } from './lib';
 
 const isQuicklyMode = process.argv.findIndex(v => v === '-ss') >= 0;
+const shouldPushCode = process.argv.findIndex(v => v === '-p') >= 0;
 
+if (shouldPushCode) pushCode()
 if (isQuicklyMode) {
   getRemoteTags().stdout.on('end', () => {
     console.log('拉取成功~');
