@@ -3,6 +3,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var lib_1 = require("./lib");
 var isQuicklyMode = process.argv.findIndex(function (v) { return v === '-ss'; }) >= 0;
+var shouldPushCode = process.argv.findIndex(function (v) { return v === '-p'; }) >= 0;
+if (shouldPushCode)
+    lib_1.pushCode();
 if (isQuicklyMode) {
     lib_1.getRemoteTags().stdout.on('end', function () {
         console.log('拉取成功~');
