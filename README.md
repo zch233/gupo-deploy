@@ -22,11 +22,11 @@ gupo-deploy -ss
 ### 标准用法，根据标签名称发布
 
 ```
-gupo-deploy --oss_tag=[name*]
+gupo-deploy --oss_tag [name*]
 
 例如：
 
-gupo-deploy --oss_tag=oss-test-v
+gupo-deploy --oss_tag oss-test-v
 ```
 
 ### 环境变量
@@ -47,7 +47,7 @@ OSS_TAG=oss-test-v
   ...
   "scripts": {
     ...
-    "deploy": "gupo-deploy" // "gupo-deploy" --mode xxx,
+    "deploy": "gupo-deploy" // or "gupo-deploy --mode .env.xxx"
   }
 }
 ```
@@ -59,3 +59,6 @@ yarn deploy
 
 npm run deploy
 ```
+
+
+*大版本更新请手动发布*
