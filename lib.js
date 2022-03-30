@@ -7,7 +7,7 @@ var getRemoteTags = function () { return spawn('git', ['fetch', '--tags']); };
 exports.getRemoteTags = getRemoteTags;
 var getLatestTag = function () { return spawn('git', ['describe']); };
 exports.getLatestTag = getLatestTag;
-var getLatestTags = function (currentTag) { return spawn('git', ['tag', '-l', '--sort=-v:refname', currentTag + "*"]); };
+var getLatestTags = function (currentTag) { return spawn('git', ['tag', '-l', '--sort=-v:refname', "".concat(currentTag, "*")]); };
 exports.getLatestTags = getLatestTags;
 var addTag = function (version) { return spawn('git', ['tag', '-a', version, '-m', 'auto deploy version']); };
 exports.addTag = addTag;
@@ -20,12 +20,12 @@ var publish = function (latestTag) {
     var array = latestTag.split('\n')[0].split('.');
     array.splice(-1, 1, (Number(array.slice(-1)) + 1).toString());
     console.log('即将发布为:', array.join('.'));
-    exports.addTag(array.join('.')).stdout.on('end', function () {
+    (0, exports.addTag)(array.join('.')).stdout.on('end', function () {
         console.log('新增成功~');
-        exports.pushTag().stdout.on('end', function () {
+        (0, exports.pushTag)().stdout.on('end', function () {
             console.log('发布成功~');
         });
-        exports.pushCode().on('error', function (chunk) {
+        (0, exports.pushCode)().on('error', function (chunk) {
             console.log('发布失败~');
             console.log('请手动运行 `git push --tags`');
             console.log('错误信息:', chunk.toString());
