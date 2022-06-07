@@ -8,7 +8,7 @@
     "*.js"
   ],
   "main": "index.js",
-  "repository": "git@github.com:zch233/gupo-deploy.git",
+  "repository": "git@codeup.aliyun.com:gupo/gupo-dev/fe/gupo-deploy.git",
   "author": "zhangchao <529743595@qq.com>",
   "license": "MIT",
   "devDependencies": {
