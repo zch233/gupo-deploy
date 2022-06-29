@@ -8,10 +8,10 @@ export const addTag = (version) => spawn('git', ['tag', '-a', version, '-m', 'au
 export const pushTag = () => spawn('git', ['push', '--tags']);
 export const pushCode = () => spawn('git', ['push']);
 
-export const publish = (latestTag: string) => {
+export const publish = (latestTag: string, customer?: boolean) => {
   console.log('当前最新值为:', latestTag.split('\n')[0]);
   const array = latestTag.split('\n')[0].split('.')
-  array.splice(-1, 1, (Number(array.slice(-1)) + 1).toString())
+  !customer && array.splice(-1, 1, (Number(array.slice(-1)) + 1).toString())
   console.log('即将发布为:', array.join('.'));
   addTag(array.join('.')).stdout.on('end', () => {
     console.log('新增成功~');
