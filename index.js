@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var lib_1 = require("./lib");
 var isQuicklyMode = process.argv.findIndex(function (v) { return v === '-ss'; }) >= 0;
 var shouldPushCode = process.argv.findIndex(function (v) { return v === '-p' || v === '-push'; }) >= 0;
+var releaseAsIndex = process.argv.findIndex(function (v) { return v === '--release_as'; });
+var releaseAs = releaseAsIndex >= 0 ? process.argv[releaseAsIndex + 1] : undefined;
 if (shouldPushCode)
     (0, lib_1.pushCode)();
 if (isQuicklyMode) {
@@ -44,8 +46,8 @@ else {
         (0, lib_1.getLatestTags)(currentTag_1).stdout.on('data', function (chunk) { return gitTagsData += chunk.toString(); });
         (0, lib_1.getLatestTags)(currentTag_1).stdout.on('end', function () {
             console.log('读取成功~');
-            var latestTag = gitTagsData || "".concat(currentTag_1, "0.0.0");
-            (0, lib_1.publish)(latestTag);
+            var latestTag = releaseAs ? "".concat(currentTag_1).concat(releaseAs) : (gitTagsData || "".concat(currentTag_1, "0.0.0"));
+            (0, lib_1.publish)(latestTag, !!releaseAs);
         });
     });
 }

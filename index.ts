@@ -4,6 +4,8 @@ import { getLatestTag, getLatestTags, getRemoteTags, publish, pushCode } from '.
 
 const isQuicklyMode = process.argv.findIndex(v => v === '-ss') >= 0;
 const shouldPushCode = process.argv.findIndex(v => v === '-p' || v === '-push') >= 0;
+const releaseAsIndex = process.argv.findIndex(v => v === '--release_as');
+const releaseAs = releaseAsIndex >= 0 ? process.argv[releaseAsIndex + 1] : undefined;
 
 if (shouldPushCode) pushCode()
 if (isQuicklyMode) {
@@ -46,8 +48,8 @@ if (isQuicklyMode) {
     getLatestTags(currentTag).stdout.on('data', chunk => gitTagsData += chunk.toString());
     getLatestTags(currentTag).stdout.on('end', () => {
       console.log('读取成功~');
-      const latestTag = gitTagsData || `${currentTag}0.0.0`;
-      publish(latestTag)
+      const latestTag = releaseAs ? `${currentTag}${releaseAs}` : (gitTagsData || `${currentTag}0.0.0`);
+      publish(latestTag, !!releaseAs)
     });
   });
 }
