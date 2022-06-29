@@ -16,7 +16,7 @@ exports.pushTag = pushTag;
 var pushCode = function () { return spawn('git', ['push']); };
 exports.pushCode = pushCode;
 var publish = function (latestTag, customer) {
-    console.log('当前最新值为:', latestTag.split('\n')[0]);
+    !customer && console.log('当前最新值为:', latestTag.split('\n')[0]);
     var array = latestTag.split('\n')[0].split('.');
     !customer && array.splice(-1, 1, (Number(array.slice(-1)) + 1).toString());
     console.log('即将发布为:', array.join('.'));
