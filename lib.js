@@ -15,10 +15,10 @@ var pushTag = function () { return spawn('git', ['push', '--tags']); };
 exports.pushTag = pushTag;
 var pushCode = function () { return spawn('git', ['push']); };
 exports.pushCode = pushCode;
-var publish = function (latestTag) {
+var publish = function (latestTag, customer) {
     console.log('当前最新值为:', latestTag.split('\n')[0]);
     var array = latestTag.split('\n')[0].split('.');
-    array.splice(-1, 1, (Number(array.slice(-1)) + 1).toString());
+    !customer && array.splice(-1, 1, (Number(array.slice(-1)) + 1).toString());
     console.log('即将发布为:', array.join('.'));
     (0, exports.addTag)(array.join('.')).stdout.on('end', function () {
         console.log('新增成功~');
