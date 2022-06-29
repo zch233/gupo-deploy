@@ -1,6 +1,6 @@
 {
   "name": "gupo-deploy",
-  "version": "1.0.9",
+  "version": "1.0.0",
   "bin": {
     "gupo-deploy": "index.js"
   },
@@ -12,10 +12,15 @@
   "author": "zhangchao <529743595@qq.com>",
   "license": "MIT",
   "scripts": {
-    "prepublishOnly": "tsc"
-},
+    "prepublishOnly": "tsc",
+    "release": "standard-version"
+  },
   "devDependencies": {
     "@types/node": "^16.6.1",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "standard-version": "^9.5.0"
+  },
+  "publishConfig": {
+    "registry": "https://packages.aliyun.com/5eb3e37038076f00011bcd4a/npm/npm-registry/"
   }
 }

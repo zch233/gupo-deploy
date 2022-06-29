@@ -16,7 +16,7 @@ yarn global add gupo-deploy
 ##### 使用
 
 ```
-gupo-deploy -ss
+gupo-deploy -ss // 将自动根据当前分支的上一次的 tag 发布
 ```
 
 ### 标准用法，根据标签名称发布
@@ -61,4 +61,17 @@ npm run deploy
 ```
 
 
-*大版本更新请手动发布*
+### 参数
+
+```
+$ gupo-deploy --help
+
+  Usage
+    $ gupo-deploy
+
+  Options
+    --ss // 自动根据当前分支的上一次的 tag 进行快速发布
+    --p // 是否推送(push)代码，默认只推送标签
+    --oss_tag string // 流水线对应的标签名称(exmaple: test-oss-v)
+    --release_as string // 发布版本号(exmaple: 1.0.0)
+```
