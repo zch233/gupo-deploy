@@ -11,8 +11,13 @@
   "repository": "git@codeup.aliyun.com:gupo/gupo-dev/fe/gupo-deploy.git",
   "author": "zhangchao <529743595@qq.com>",
   "license": "MIT",
+  "scripts": {
+    "prepublishOnly": "tsc",
+    "release": "standard-version"
+  },
   "devDependencies": {
     "@types/node": "^16.6.1",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "standard-version": "^9.5.0"
   }
 }
