@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://codeup.aliyun.com/gupo/gupo-dev/fe/gupo-deploy/compare/v1.1.0...v1.2.0) (2022-06-29)
+
+
+### Features
+
+* remove log in customer ([7969aac](https://codeup.aliyun.com/gupo/gupo-dev/fe/gupo-deploy/commit/7969aace9b4b065f63eba23eaf210a0988138cc8))
+* tsc ([5969905](https://codeup.aliyun.com/gupo/gupo-dev/fe/gupo-deploy/commit/59699053f5b1b48dcc39565a176ce34a98391eff))
+
 ## 1.1.0 (2022-06-29)
 
 
