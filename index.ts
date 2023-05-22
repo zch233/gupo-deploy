@@ -25,15 +25,17 @@ if (isQuicklyMode) {
 } else {
   const argModeIndex = process.argv.findIndex(v => v === '--mode');
   const argTagIndex = process.argv.findIndex(v => v === '--oss_tag');
+  const argEnvDirIndex = process.argv.findIndex(v => v === '--env_dir');
   const argMode = argModeIndex >= 0 ? process.argv[argModeIndex + 1] : undefined;
   const argTag = argTagIndex >= 0 ? process.argv[argTagIndex + 1] : undefined;
-  require("dotenv").config({path: require('path').resolve(process.cwd(), `.env${argMode ? `.${argMode}` : ''}`)});
-  console.log('当前环境为:', argMode || '默认（.env）');
+  const envDir = argEnvDirIndex >= 0 ? process.argv[argEnvDirIndex + 1] : '';
+  require("dotenv").config({path: require('path').resolve(process.cwd(), envDir,`.env${argMode ? `.${argMode}` : ''}`)});
+  console.log('当前环境为:', argMode || '默认');
 
   let currentTag = argTag || process.env.OSS_TAG
 
   if (!currentTag) {
-    require("dotenv").config({path: require('path').resolve(process.cwd(), '.env.development')});
+    require("dotenv").config({path: require('path').resolve(process.cwd(), envDir,'.env.development')});
     currentTag = process.env.OSS_TAG
   }
 

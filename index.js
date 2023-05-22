@@ -27,13 +27,15 @@ if (isQuicklyMode) {
 else {
     var argModeIndex = process.argv.findIndex(function (v) { return v === '--mode'; });
     var argTagIndex = process.argv.findIndex(function (v) { return v === '--oss_tag'; });
+    var argEnvDirIndex = process.argv.findIndex(function (v) { return v === '--env_dir'; });
     var argMode = argModeIndex >= 0 ? process.argv[argModeIndex + 1] : undefined;
     var argTag = argTagIndex >= 0 ? process.argv[argTagIndex + 1] : undefined;
-    require("dotenv").config({ path: require('path').resolve(process.cwd(), ".env".concat(argMode ? ".".concat(argMode) : '')) });
-    console.log('当前环境为:', argMode || '默认（.env）');
+    var envDir = argEnvDirIndex >= 0 ? process.argv[argEnvDirIndex + 1] : '';
+    require("dotenv").config({ path: require('path').resolve(process.cwd(), envDir, ".env".concat(argMode ? ".".concat(argMode) : '')) });
+    console.log('当前环境为:', argMode || '默认');
     var currentTag_1 = argTag || process.env.OSS_TAG;
     if (!currentTag_1) {
-        require("dotenv").config({ path: require('path').resolve(process.cwd(), '.env.development') });
+        require("dotenv").config({ path: require('path').resolve(process.cwd(), envDir, '.env.development') });
         currentTag_1 = process.env.OSS_TAG;
     }
     if (!currentTag_1) {
