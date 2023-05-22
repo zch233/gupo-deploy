@@ -48,7 +48,7 @@ else {
         (0, lib_1.getLatestTags)(currentTag_1).stdout.on('data', function (chunk) { return gitTagsData += chunk.toString(); });
         (0, lib_1.getLatestTags)(currentTag_1).stdout.on('end', function () {
             console.log('读取成功~');
-            var latestTag = releaseAs ? "".concat(currentTag_1).concat(releaseAs) : (gitTagsData || "".concat(currentTag_1, "0.0.0"));
+            var latestTag = releaseAs ? (releaseAs.includes('-v') ? releaseAs : "".concat(currentTag_1).concat(releaseAs)) : (gitTagsData || "".concat(currentTag_1, "0.0.0"));
             (0, lib_1.publish)(latestTag, !!releaseAs);
         });
     });
