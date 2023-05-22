@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.1.0...v1.3.0) (2023-05-22)
+
+
+### Features
+
+* support dotenv dir ([bb1a17a](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/bb1a17a429b2396401c2f392c4e2142dda484f1a))
+* support dotenv dir ([473c3c2](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/473c3c2717ca48260b3ff2d3454e2fa91318897a))
+* update --release_as version ([b17acc9](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/b17acc9196094421a90e56d8e8a1be96576161ce))
+
 ## [1.2.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.1.0...v1.2.0) (2023-05-22)
 
 

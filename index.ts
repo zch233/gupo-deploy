@@ -50,7 +50,7 @@ if (isQuicklyMode) {
     getLatestTags(currentTag).stdout.on('data', chunk => gitTagsData += chunk.toString());
     getLatestTags(currentTag).stdout.on('end', () => {
       console.log('读取成功~');
-      const latestTag = releaseAs ? `${currentTag}${releaseAs}` : (gitTagsData || `${currentTag}0.0.0`);
+      const latestTag = releaseAs ? (releaseAs.includes('-v') ? releaseAs : `${currentTag}${releaseAs}`) : (gitTagsData || `${currentTag}0.0.0`);
       publish(latestTag, !!releaseAs)
     });
   });
