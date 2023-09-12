@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.3.0...v1.4.0) (2023-09-12)
+
+
+### Features
+
+* update --release_as version ([a5a9921](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/a5a99213ca0a7a2638c07cfd41b1b6e0c1382273))
+
+
+### Bug Fixes
+
+* fix push tag ([bde9e36](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/bde9e361b4ac66b033312dbdb9f8a4eebd88e90a))
+
 ## [1.3.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.1.0...v1.3.0) (2023-05-22)
 
 
