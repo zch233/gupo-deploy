@@ -6,6 +6,7 @@ var isQuicklyMode = process.argv.findIndex(function (v) { return v === '-ss'; })
 var shouldPushCode = process.argv.findIndex(function (v) { return v === '-p' || v === '-push'; }) >= 0;
 var releaseAsIndex = process.argv.findIndex(function (v) { return v === '--release_as'; });
 var releaseAs = releaseAsIndex >= 0 ? process.argv[releaseAsIndex + 1] : undefined;
+console.log(process.argv.findIndex(function (v) { return v === '-p' || v === '-push'; }) >= 0);
 if (shouldPushCode)
     (0, lib_1.pushCode)();
 if (isQuicklyMode) {

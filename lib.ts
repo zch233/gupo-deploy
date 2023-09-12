@@ -18,7 +18,7 @@ export const publish = (latestTag: string, customer?: boolean) => {
     pushTag().stdout.on('end', () => {
       console.log('发布成功~');
     });
-    pushCode().on('error', (chunk) => {
+    pushTag().on('error', (chunk) => {
       console.log('发布失败~');
       console.log('请手动运行 `git push --tags`');
       console.log('错误信息:', chunk.toString());
