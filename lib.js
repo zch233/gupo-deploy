@@ -25,7 +25,7 @@ var publish = function (latestTag, customer) {
         (0, exports.pushTag)().stdout.on('end', function () {
             console.log('发布成功~');
         });
-        (0, exports.pushCode)().on('error', function (chunk) {
+        (0, exports.pushTag)().on('error', function (chunk) {
             console.log('发布失败~');
             console.log('请手动运行 `git push --tags`');
             console.log('错误信息:', chunk.toString());
