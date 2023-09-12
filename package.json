@@ -13,7 +13,7 @@
   "license": "MIT",
   "scripts": {
     "prepublishOnly": "tsc --skipLibCheck",
-    "release": "standard-version --skip.commit"
+    "release": "standard-version"
   },
   "devDependencies": {
     "@types/node": "18.16.18",
