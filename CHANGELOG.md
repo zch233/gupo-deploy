@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.3.0...v1.5.0) (2023-12-18)
+
+
+### Features
+
+* add verbose ([f82b2a9](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/f82b2a9563a1b3c34c566c6c26488103fb2ff20d))
+* refactor releaseAs ([47456b8](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/47456b887362d6f84d8413f325dd723725021f8e))
+* update --release_as version ([a5a9921](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/a5a99213ca0a7a2638c07cfd41b1b6e0c1382273))
+* update version ([11605d6](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/11605d6862a81005e486e0f7ad7ab46bca75b156))
+
+
+### Bug Fixes
+
+* fix minor ([3eea237](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/3eea2375db71ad2f70f865ad45c9dcdf479234a7))
+* fix node types ([0deef59](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/0deef59df647ed6fe382478961d14e8180072a66))
+* fix push tag ([bde9e36](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/bde9e361b4ac66b033312dbdb9f8a4eebd88e90a))
+* fix scripts ([f6c2468](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/f6c246886ded9b3ae74df5ca76e20258ed9814b1))
+* update tsconfig ([cc128cf](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/cc128cfcc50146899dde2121b160c1cf3b4d87fc))
+
 ## [1.4.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.3.0...v1.4.0) (2023-09-12)
 
 
