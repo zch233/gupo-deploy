@@ -43,41 +43,40 @@ export const getFeatureVersion = (tag: string, mode: 'major' | 'minor' | 'patch'
   return array.join('.');
 }
 
-export const showVerbose = (tag: string) => {
-  const oldVersion = tag
+export const showVerbose = async (tag: string) => {
+  const oldVersion = tag;
   const next = {
     major: getFeatureVersion(tag, 'major'),
     minor: getFeatureVersion(tag, 'minor'),
     patch: getFeatureVersion(tag, 'patch'),
-  }
+  };
   let prompts = inquirer.createPromptModule();
-  return prompts([
+  const res = await inquirer.prompt([
     {
-      type: "list",
-      name: "release",
-      message: `\nThe current version in codeup is ${oldVersion}\nHow would you like to bump it?`,
-      default: "patch",
+      type: 'list',
+      name: 'release',
+      message: `\nThe current version in codeup is ${ oldVersion }\nHow would you like to bump it?`,
+      default: 'patch',
       pageSize: 10,
       choices: [
-        { value: "major", name: `major (${next.major})` },
-        { value: "minor", name: `minor (${next.minor})` },
-        { value: "patch", name: `patch (${next.patch})` },
+        { value: 'major', name: `major (${ next.major })` },
+        { value: 'minor', name: `minor (${ next.minor })` },
+        { value: 'patch', name: `patch (${ next.patch })` },
         new inquirer.Separator(),
-        { value: "custom", name: "custom..." },
-      ]
+        { value: 'custom', name: 'custom...' },
+      ],
     },
     {
-      type: "input",
-      name: "newVersion",
-      message: "Enter the new version number:",
+      type: 'input',
+      name: 'newVersion',
+      message: 'Enter the new version number:',
       default: oldVersion,
-      when: (previousAnswer) => previousAnswer.release === "custom",
-      filter: version => version.trim().replace(/^[=v]+/, ''),
-      validate: (newVersion: string) => {
-        return /^\d+$/.test(newVersion.split('.').join('')) ? true : "That's not a valid version number";
+      when: (previousAnswer_1) => previousAnswer_1.release === 'custom',
+      filter: version_1 => version_1.trim().replace(/^[=v]+/, ''),
+      validate: (newVersion_1: string) => {
+        return /^\d+$/.test(newVersion_1.split('.').join('')) ? true : 'That\'s not a valid version number';
       },
-    }
-  ]).then(res => {
-    return res.release === 'custom' ? res.newVersion : next[res.release as keyof typeof next]
-  });
+    },
+  ]);
+  return res.release === 'custom' ? res.newVersion : next[res.release as keyof typeof next];
 }
