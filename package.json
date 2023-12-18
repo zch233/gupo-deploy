@@ -20,11 +20,6 @@
     "@types/node": "18.16.18",
     "standard-version": "^9.5.0"
   },
-  "standard-version": {
-    "scripts": {
-      "precommit": true
-    }
-  },
   "publishConfig": {
     "registry": "https://packages.aliyun.com/5eb3e37038076f00011bcd4a/npm/npm-registry/"
   },
