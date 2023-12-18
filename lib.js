@@ -48,7 +48,7 @@ const getFeatureVersion = (tag, mode) => {
         array[array.length - 1] = (Number(array.slice(-1)) + 1).toString();
     }
     else if (mode === 'minor' && array.length === 3) {
-        array[array.length - 2] = (Number(array.slice(-1)) + 1).toString();
+        array[array.length - 2] = (Number(array.slice(-2, -1)) + 1).toString();
     }
     else if (mode === 'major') {
         array[0] = array[0].slice(0, -1) + (Number(array[0].split('').slice(-1)) + 1).toString();
