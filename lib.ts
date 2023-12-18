@@ -1,27 +1,82 @@
-const child_process = require('child_process');
-const {spawn} = child_process;
+import inquirer from 'inquirer';
+import {spawn} from 'child_process';
 
 export const getRemoteTags = () => spawn('git', ['fetch', '--tags']);
 export const getLatestTag = () => spawn('git', ['describe']);
-export const getLatestTags = (currentTag) => spawn('git', ['tag', '-l', '--sort=-v:refname', `${currentTag}*`]);
-export const addTag = (version) => spawn('git', ['tag', '-a', version, '-m', 'auto deploy version']);
+export const getLatestTags = (currentTag: string) => spawn('git', ['tag', '-l', '--sort=-v:refname', `${currentTag}*`]);
+export const addTag = (version: string) => spawn('git', ['tag', '-a', version, '-m', 'auto deploy version']);
 export const pushTag = () => spawn('git', ['push', '--tags']);
 export const pushCode = () => spawn('git', ['push']);
 
-export const publish = (latestTag: string, customer?: boolean) => {
-  !customer && console.log('当前最新值为:', latestTag.split('\n')[0]);
-  const array = latestTag.split('\n')[0].split('.')
-  !customer && array.splice(-1, 1, (Number(array.slice(-1)) + 1).toString())
-  console.log('即将发布为:', array.join('.'));
-  addTag(array.join('.')).stdout.on('end', () => {
+export const publish = async (latestTag: string, customer?: boolean, verboseMode?: boolean) => {
+  let featureTag = ''
+  const _latestTag = latestTag.split('\n')[0]
+  if (verboseMode) {
+    featureTag = await showVerbose(_latestTag)
+  } else if (!customer) {
+    console.log('当前最新值为:', latestTag.split('\n')[0]);
+    featureTag = getFeatureVersion(_latestTag, 'patch')
+  }
+  console.log('即将发布为:', featureTag);
+  addTag(featureTag).stdout.on('end', () => {
     console.log('新增成功~');
     pushTag().stdout.on('end', () => {
       console.log('发布成功~');
     });
-    pushCode().on('error', (chunk) => {
+    pushTag().on('error', (chunk) => {
       console.log('发布失败~');
       console.log('请手动运行 `git push --tags`');
       console.log('错误信息:', chunk.toString());
     });
   });
+}
+
+export const getFeatureVersion = (tag: string, mode: 'major' | 'minor' | 'patch') => {
+  const array = tag.split('.');
+  if (mode === 'patch' && array.length > 1) {
+    array[array.length - 1] = (Number(array.slice(-1)) + 1).toString();
+  } else if (mode === 'minor' && array.length === 3) {
+    array[array.length - 2] = (Number(array.slice(-2, -1)) + 1).toString();
+  } else if (mode === 'major') {
+    array[0] = array[0].slice(0, -1) + (Number(array[0].split('').slice(-1)) + 1).toString();
+  }
+  return array.join('.');
+}
+
+export const showVerbose = async (tag: string) => {
+  const oldVersion = tag;
+  const next = {
+    major: getFeatureVersion(tag, 'major'),
+    minor: getFeatureVersion(tag, 'minor'),
+    patch: getFeatureVersion(tag, 'patch'),
+  };
+  let prompts = inquirer.createPromptModule();
+  const res = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'release',
+      message: `\nThe current version in codeup is ${ oldVersion }\nHow would you like to bump it?`,
+      default: 'patch',
+      pageSize: 10,
+      choices: [
+        { value: 'major', name: `major (${ next.major })` },
+        { value: 'minor', name: `minor (${ next.minor })` },
+        { value: 'patch', name: `patch (${ next.patch })` },
+        new inquirer.Separator(),
+        { value: 'custom', name: 'custom...' },
+      ],
+    },
+    {
+      type: 'input',
+      name: 'newVersion',
+      message: 'Enter the new version number:',
+      default: oldVersion,
+      when: (previousAnswer_1) => previousAnswer_1.release === 'custom',
+      filter: version_1 => version_1.trim().replace(/^[=v]+/, ''),
+      validate: (newVersion_1: string) => {
+        return /^\d+$/.test(newVersion_1.split('.').join('')) ? true : 'That\'s not a valid version number';
+      },
+    },
+  ]);
+  return res.release === 'custom' ? res.newVersion : next[res.release as keyof typeof next];
 }
