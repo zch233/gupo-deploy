@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.showVerbose = exports.getFeatureVersion = exports.publish = exports.pushCode = exports.pushTag = exports.addTag = exports.getLatestTags = exports.getLatestTag = exports.getRemoteTags = void 0;
+exports.getPureTag = exports.showVerbose = exports.getFeatureVersion = exports.publish = exports.pushCode = exports.pushTag = exports.addTag = exports.getLatestTags = exports.getLatestTag = exports.getRemoteTags = void 0;
 const inquirer_1 = __importDefault(require("inquirer"));
 const child_process_1 = require("child_process");
 const getRemoteTags = () => (0, child_process_1.spawn)('git', ['fetch', '--tags']);
@@ -52,7 +52,7 @@ const getFeatureVersion = (tag, mode) => {
         array[array.length - 1] = '0';
     }
     else if (mode === 'major') {
-        array[0] = array[0].slice(0, -1) + (Number(array[0].split('').slice(-1)) + 1).toString();
+        array[0] = array[0].slice(0, -1) + (Number(array[0].slice(array[0].lastIndexOf('v') + 1)) + 1).toString();
         array[array.length - 1] = '0';
         array[array.length - 2] = '0';
     }
@@ -86,7 +86,7 @@ const showVerbose = async (tag) => {
             type: 'input',
             name: 'newVersion',
             message: 'Enter the new version number:',
-            default: oldVersion,
+            default: oldVersion.slice(oldVersion.lastIndexOf('v') + 1),
             when: (previousAnswer_1) => previousAnswer_1.release === 'custom',
             filter: version_1 => version_1.trim().replace(/^[=v]+/, ''),
             validate: (newVersion_1) => {
@@ -94,6 +94,8 @@ const showVerbose = async (tag) => {
             },
         },
     ]);
-    return res.release === 'custom' ? res.newVersion : next[res.release];
+    return res.release === 'custom' ? `${(0, exports.getPureTag)(tag)}res.newVersion` : next[res.release];
 };
 exports.showVerbose = showVerbose;
+const getPureTag = (tag) => tag.slice(0, tag.lastIndexOf('v') + 1);
+exports.getPureTag = getPureTag;
