@@ -94,7 +94,7 @@ const showVerbose = async (tag) => {
             },
         },
     ]);
-    return res.release === 'custom' ? `${(0, exports.getPureTag)(tag)}res.newVersion` : next[res.release];
+    return res.release === 'custom' ? `${(0, exports.getPureTag)(tag)}${res.newVersion}` : next[res.release];
 };
 exports.showVerbose = showVerbose;
 const getPureTag = (tag) => tag.slice(0, tag.lastIndexOf('v') + 1);
