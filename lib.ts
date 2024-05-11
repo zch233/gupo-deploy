@@ -81,7 +81,7 @@ export const showVerbose = async (tag: string) => {
       },
     },
   ]);
-  return res.release === 'custom' ? `${getPureTag(tag)}res.newVersion` : next[res.release as keyof typeof next];
+  return res.release === 'custom' ? `${getPureTag(tag)}${res.newVersion}` : next[res.release as keyof typeof next];
 }
 
 export const getPureTag = (tag: string) => tag.slice(0, tag.lastIndexOf('v') + 1)
