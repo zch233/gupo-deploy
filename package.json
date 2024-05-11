@@ -12,8 +12,9 @@
   "author": "zhangchao <529743595@qq.com>",
   "license": "MIT",
   "scripts": {
-    "prepublishOnly": "tsc --skipLibCheck",
-    "release": "standard-version"
+    "dev": "npm run compile --watch",
+    "compile": "tsc --skipLibCheck",
+    "release": "npm run compile && standard-version && npm publish"
   },
   "devDependencies": {
     "@types/inquirer": "9.0.3",
