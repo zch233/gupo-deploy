@@ -39,7 +39,7 @@ export const getFeatureVersion = (tag: string, mode: 'major' | 'minor' | 'patch'
     array[array.length - 2] = (Number(array.slice(-2, -1)) + 1).toString();
     array[array.length - 1] = '0'
   } else if (mode === 'major') {
-    array[0] = array[0].slice(0, -1) + (Number(array[0].split('').slice(-1)) + 1).toString();
+    array[0] = array[0].slice(0, -1) + (Number(array[0].slice(array[0].lastIndexOf('v') + 1)) + 1).toString();
     array[array.length - 1] = '0'
     array[array.length - 2] = '0'
   }
@@ -73,7 +73,7 @@ export const showVerbose = async (tag: string) => {
       type: 'input',
       name: 'newVersion',
       message: 'Enter the new version number:',
-      default: oldVersion,
+      default: oldVersion.slice(oldVersion.lastIndexOf('v') + 1),
       when: (previousAnswer_1) => previousAnswer_1.release === 'custom',
       filter: version_1 => version_1.trim().replace(/^[=v]+/, ''),
       validate: (newVersion_1: string) => {
@@ -81,5 +81,8 @@ export const showVerbose = async (tag: string) => {
       },
     },
   ]);
-  return res.release === 'custom' ? res.newVersion : next[res.release as keyof typeof next];
+  return res.release === 'custom' ? `${getPureTag(tag)}res.newVersion` : next[res.release as keyof typeof next];
 }
+
+export const getPureTag = (tag: string) => tag.slice(0, tag.lastIndexOf('v') + 1)
+
