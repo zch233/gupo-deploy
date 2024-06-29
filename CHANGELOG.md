@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.5.4...v1.6.0) (2024-06-29)
+
+
+### Features
+
+* update zhHans ([eda22db](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/eda22dbb4ca003d8e196bbe569d2b2326ccf309a))
+
+
+### Bug Fixes
+
+* fix custom default ([c9873c6](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/c9873c686ec9313f9db6b29e2dda4a0dbffc7591))
+
 ### [1.5.4](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.5.3...v1.5.4) (2024-05-11)
 
 
