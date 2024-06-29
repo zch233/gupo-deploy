@@ -73,7 +73,7 @@ export const showVerbose = async (tag: string) => {
       type: 'input',
       name: 'newVersion',
       message: '请输入你的版本号（例如2.3.3）:',
-      default: oldVersion.slice(oldVersion.lastIndexOf('v') + 1),
+      default: getFeatureVersion(tag, 'patch').replace(getPureTag(tag), ''),
       when: (previousAnswer_1) => previousAnswer_1.release === 'custom',
       filter: version_1 => version_1.trim().replace(/^[=v]+/, ''),
       validate: (newVersion_1: string) => {
