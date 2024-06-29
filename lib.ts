@@ -58,7 +58,7 @@ export const showVerbose = async (tag: string) => {
     {
       type: 'list',
       name: 'release',
-      message: `\nThe current version in codeup is ${ oldVersion }\nHow would you like to bump it?`,
+      message: `\n当前获取到的最新版是 ${ oldVersion }\n你想发布哪个版本?`,
       default: 'patch',
       pageSize: 10,
       choices: [
@@ -72,12 +72,12 @@ export const showVerbose = async (tag: string) => {
     {
       type: 'input',
       name: 'newVersion',
-      message: 'Enter the new version number:',
+      message: '请输入你的版本号（例如2.3.3）:',
       default: oldVersion.slice(oldVersion.lastIndexOf('v') + 1),
       when: (previousAnswer_1) => previousAnswer_1.release === 'custom',
       filter: version_1 => version_1.trim().replace(/^[=v]+/, ''),
       validate: (newVersion_1: string) => {
-        return /^\d+$/.test(newVersion_1.split('.').join('')) ? true : 'That\'s not a valid version number';
+        return /^\d+$/.test(newVersion_1.split('.').join('')) ? true : '请输入正确的版本号（例如2.3.3 或 v2.3.3）';
       },
     },
   ]);
