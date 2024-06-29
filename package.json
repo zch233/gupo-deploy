@@ -2,12 +2,12 @@
   "name": "gupo-deploy",
   "version": "1.6.0",
   "bin": {
-    "gupo-deploy": "index.js"
+    "gupo-deploy": "dist/index.js"
   },
   "files": [
-    "*.js"
+    "dist"
   ],
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": "git@codeup.aliyun.com:gupo/node-modules/gupo-deploy.git",
   "author": "zhangchao <529743595@qq.com>",
   "license": "MIT",
