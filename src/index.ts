@@ -29,6 +29,7 @@ if (isQuicklyMode) {
   const argTagIndex = process.argv.findIndex(v => v === '--oss_tag');
   const argEnvDirIndex = process.argv.findIndex(v => v === '--env_dir');
   const argNewReleaseIndex = process.argv.findIndex(v => v === '--newRelease');
+  const argReverseReleaseIndex = process.argv.findIndex(v => v === '--reverseRelease');
   const argMode = argModeIndex >= 0 ? process.argv[argModeIndex + 1] : undefined;
   const argTag = argTagIndex >= 0 ? process.argv[argTagIndex + 1] : undefined;
   const envDir = argEnvDirIndex >= 0 ? process.argv[argEnvDirIndex + 1] : '';
@@ -45,18 +46,21 @@ if (isQuicklyMode) {
   getRemoteTags().stdout.on('end', () => {
     console.log('拉取成功~');
 
+    const currentTagSplitArray = currentTag.split('-')
+    const isCurrentTagGray = currentTagSplitArray[0]?.includes('gray')
+    const currentTagWithRelease = [currentTagSplitArray[0].replace('gray', '')].concat(currentTagSplitArray.slice(1)).join('-')
+    const currentTagWithGray = [`${currentTagSplitArray[0]}gray`].concat(currentTagSplitArray.slice(1)).join('-')
     if (argNewReleaseIndex >= 0) {
       let gitTagsRelease = ''
       let gitTagsGray = ''
       let gitTagsDataRelease = ''
       let gitTagsDataGray = ''
-      const currentTagSplitArray = currentTag.split('-')
-      if (currentTagSplitArray[0]?.includes('gray')) {
-        gitTagsRelease = [currentTagSplitArray[0].replace('gray', '')].concat(currentTagSplitArray.slice(1)).join('-')
+      if (isCurrentTagGray) {
+        gitTagsRelease = currentTagWithRelease
         gitTagsGray = currentTag
       } else {
         gitTagsRelease = currentTag
-        gitTagsGray = [`${currentTagSplitArray[0]}gray`].concat(currentTagSplitArray.slice(1)).join('-')
+        gitTagsGray = currentTagWithGray
       }
       Promise.all([
         new Promise(resolve => {
@@ -79,6 +83,7 @@ if (isQuicklyMode) {
       })
     } else {
       let gitTagsData = ''
+      if (argReverseReleaseIndex >= 0) currentTag = isCurrentTagGray ? currentTagWithRelease : currentTagWithGray
       getLatestTags(currentTag).stdout.on('data', chunk => gitTagsData += chunk.toString());
       getLatestTags(currentTag).stdout.on('end', () => {
         console.log('读取成功~');
