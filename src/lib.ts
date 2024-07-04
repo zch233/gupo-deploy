@@ -8,14 +8,14 @@ export const addTag = (version: string) => spawn('git', ['tag', '-a', version, '
 export const pushTag = () => spawn('git', ['push', '--tags']);
 export const pushCode = () => spawn('git', ['push']);
 
-export const publish = async (latestTag: string | Record<string, string>[], customer?: boolean, verboseMode?: boolean) => {
+export const publish = async (latestTag: string | Record<string, string>, customer?: boolean, verboseMode?: boolean) => {
   let featureTag = ''
-  const _latestTag: Record<string, string>[] = typeof latestTag === 'string' ? [{release: latestTag}] : latestTag
+  const _latestTag: Record<string, string> = typeof latestTag === 'string' ? {release: latestTag} : latestTag
   if (verboseMode) {
     featureTag = await showVerbose(_latestTag)
   } else if (!customer) {
     console.log('当前最新值为:', latestTag);
-    featureTag = getFeatureVersion(Object.values(_latestTag[0])[0], 'patch')
+    featureTag = getFeatureVersion(Object.values(_latestTag)[0], 'patch')
   }
   console.log('即将发布为:', featureTag);
   addTag(featureTag).stdout.on('end', () => {
@@ -46,11 +46,10 @@ export const getFeatureVersion = (tag: string, mode: 'major' | 'minor' | 'patch'
   return array.join('.');
 }
 
-export const showVerbose = async (tag: Record<string, string>[]) => {
+export const showVerbose = async (tag: Record<string, string>) => {
   const oldVersions = tag;
-  const next = oldVersions.reduce((res, item) => {
-    const key = Object.keys(item)[0]
-    const value = Object.values(item)[0]
+  const next: Record<string, string>  = Object.keys(oldVersions).reduce((res, key) => {
+    const value = oldVersions[key]
     return {
       ...res,
       [`major${key === 'release' ? '' : `(${key})`}`]: getFeatureVersion(value, 'major'),
@@ -63,7 +62,7 @@ export const showVerbose = async (tag: Record<string, string>[]) => {
     {
       type: 'list',
       name: 'release',
-      message: `\n当前获取到的最新版是 ${ oldVersions.map(item => Object.values(item)[0]).join('、') }\n你想发布哪个版本?`,
+      message: `\n当前获取到的最新版是 ${ Object.values(oldVersions).join('、') }\n你想发布哪个版本?`,
       default: 'patch',
       pageSize: 10,
       choices: [
@@ -76,7 +75,7 @@ export const showVerbose = async (tag: Record<string, string>[]) => {
       type: 'input',
       name: 'newVersion',
       message: '请输入你完整的版本号:',
-      default: getFeatureVersion(Object.values(oldVersions[0])[0], 'patch'),
+      default: getFeatureVersion(Object.values(oldVersions)[0], 'patch'),
       when: (previousAnswer_1) => previousAnswer_1.release === 'custom',
       // filter: version_1 => version_1.trim().replace(/^[=v]+/, ''),
       validate: (newVersion_1: string) => {

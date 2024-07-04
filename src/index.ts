@@ -45,7 +45,7 @@ if (isQuicklyMode) {
   getRemoteTags().stdout.on('end', () => {
     console.log('拉取成功~');
 
-    if (argNewReleaseIndex >= 0 && verboseMode) {
+    if (argNewReleaseIndex >= 0) {
       let gitTagsRelease = ''
       let gitTagsGray = ''
       let gitTagsDataRelease = ''
@@ -73,7 +73,7 @@ if (isQuicklyMode) {
         })
       ]).then(() => {
         console.log('读取成功~');
-        publish([{gray: gitTagsDataGray.split('\n')[0] || `${gitTagsGray}0.0.0`}, {release: gitTagsDataRelease.split('\n')[0] || `${gitTagsRelease}0.0.0`}], !!releaseAs, verboseMode)
+        publish({gray: gitTagsDataGray.split('\n')[0] || `${gitTagsGray}0.0.0`, release: gitTagsDataRelease.split('\n')[0] || `${gitTagsRelease}0.0.0`}, !!releaseAs, true)
       }).catch(() => {
         console.log('你的环境不行，读取失败了');
       })
