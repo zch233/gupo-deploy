@@ -28,8 +28,8 @@ if (isQuicklyMode) {
   const argModeIndex = process.argv.findIndex(v => v === '--mode');
   const argTagIndex = process.argv.findIndex(v => v === '--oss_tag');
   const argEnvDirIndex = process.argv.findIndex(v => v === '--env_dir');
-  const argNewReleaseIndex = process.argv.findIndex(v => v === '--newRelease');
-  const argReverseReleaseIndex = process.argv.findIndex(v => v === '--reverseRelease');
+  const argNewReleaseIndex = process.argv.findIndex(v => v === '--new_release');
+  const argReverseIndex = process.argv.findIndex(v => v === '--reverse');
   const argMode = argModeIndex >= 0 ? process.argv[argModeIndex + 1] : undefined;
   const argTag = argTagIndex >= 0 ? process.argv[argTagIndex + 1] : undefined;
   const envDir = argEnvDirIndex >= 0 ? process.argv[argEnvDirIndex + 1] : '';
@@ -83,7 +83,7 @@ if (isQuicklyMode) {
       })
     } else {
       let gitTagsData = ''
-      if (argReverseReleaseIndex >= 0) currentTag = isCurrentTagGray ? currentTagWithRelease : currentTagWithGray
+      if (argReverseIndex >= 0) currentTag = isCurrentTagGray ? currentTagWithRelease : currentTagWithGray
       getLatestTags(currentTag).stdout.on('data', chunk => gitTagsData += chunk.toString());
       getLatestTags(currentTag).stdout.on('end', () => {
         console.log('读取成功~');
