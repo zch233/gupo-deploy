@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-import { getLatestTag, getLatestTags, getRemoteTags, publish, pushCode } from './lib';
+import { getLatestTag, getLatestTags, getPureVersion, getRemoteTags, publish, pushCode } from './lib';
+import path from 'node:path';
 
 const isQuicklyMode = process.argv.findIndex(v => v === '-ss') >= 0;
 const shouldPushCode = process.argv.findIndex(v => v === '-p' || v === '-push') >= 0;
@@ -27,18 +28,14 @@ if (isQuicklyMode) {
   const argModeIndex = process.argv.findIndex(v => v === '--mode');
   const argTagIndex = process.argv.findIndex(v => v === '--oss_tag');
   const argEnvDirIndex = process.argv.findIndex(v => v === '--env_dir');
+  const argNewReleaseIndex = process.argv.findIndex(v => v === '--newRelease');
   const argMode = argModeIndex >= 0 ? process.argv[argModeIndex + 1] : undefined;
   const argTag = argTagIndex >= 0 ? process.argv[argTagIndex + 1] : undefined;
   const envDir = argEnvDirIndex >= 0 ? process.argv[argEnvDirIndex + 1] : '';
-  require("dotenv").config({path: require('path').resolve(process.cwd(), envDir,`.env${argMode ? `.${argMode}` : ''}`)});
+  require("dotenv").config({path: path.resolve(process.cwd(), envDir,`.env${argMode ? `.${argMode}` : ''}`)});
   console.log('当前环境为:', argMode || '默认');
 
-  let currentTag = argTag || process.env.OSS_TAG
-
-  if (!currentTag) {
-    require("dotenv").config({path: require('path').resolve(process.cwd(), envDir,'.env.development')});
-    currentTag = process.env.OSS_TAG
-  }
+  let currentTag = argTag || process.env.OSS_TAG || ''
 
   if (!currentTag) {
     console.log('未设置 OSS_TAG 环境变量');
@@ -47,12 +44,48 @@ if (isQuicklyMode) {
 
   getRemoteTags().stdout.on('end', () => {
     console.log('拉取成功~');
-    let gitTagsData = ''
-    getLatestTags(currentTag!).stdout.on('data', chunk => gitTagsData += chunk.toString());
-    getLatestTags(currentTag!).stdout.on('end', () => {
-      console.log('读取成功~');
-      const latestTag = releaseAs ? `${currentTag}${releaseAs.replace(/.*(?=v\d.\d)/, '').replace('v', '')}` : (gitTagsData || `${currentTag}0.0.0`);
-      publish(latestTag, !!releaseAs, verboseMode)
-    });
+
+    if (argNewReleaseIndex >= 0 && verboseMode) {
+      let gitTagsRelease = ''
+      let gitTagsGray = ''
+      let gitTagsDataRelease = ''
+      let gitTagsDataGray = ''
+      const currentTagSplitArray = currentTag.split('-')
+      if (currentTagSplitArray[0]?.includes('gray')) {
+        gitTagsRelease = [currentTagSplitArray[0].replace('gray', '')].concat(currentTagSplitArray.slice(1)).join('-')
+        gitTagsGray = currentTag
+      } else {
+        gitTagsRelease = currentTag
+        gitTagsGray = [`${currentTagSplitArray[0]}gray`].concat(currentTagSplitArray.slice(1)).join('-')
+      }
+      Promise.all([
+        new Promise(resolve => {
+          getLatestTags(gitTagsRelease!).stdout.on('data', chunk => gitTagsDataRelease += chunk.toString());
+          getLatestTags(gitTagsRelease!).stdout.on('end', () => {
+            resolve(gitTagsDataRelease)
+          });
+        }),
+        new Promise(resolve => {
+          getLatestTags(gitTagsGray!).stdout.on('data', chunk => gitTagsDataGray += chunk.toString());
+          getLatestTags(gitTagsGray!).stdout.on('end', () => {
+            resolve(gitTagsDataGray)
+          });
+        })
+      ]).then(() => {
+        console.log('读取成功~');
+        publish([{gray: gitTagsDataGray.split('\n')[0] || `${gitTagsGray}0.0.0`}, {release: gitTagsDataRelease.split('\n')[0] || `${gitTagsRelease}0.0.0`}], !!releaseAs, verboseMode)
+      }).catch(() => {
+        console.log('你的环境不行，读取失败了');
+      })
+    } else {
+      let gitTagsData = ''
+      getLatestTags(currentTag).stdout.on('data', chunk => gitTagsData += chunk.toString());
+      getLatestTags(currentTag).stdout.on('end', () => {
+        console.log('读取成功~');
+        const latestTag = releaseAs ? `${currentTag}${getPureVersion(releaseAs)}` : (gitTagsData.split('\n')[0] || `${currentTag}0.0.0`);
+        publish(latestTag, !!releaseAs, verboseMode)
+      });
+    }
+
   });
 }

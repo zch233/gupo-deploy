@@ -8,14 +8,14 @@ export const addTag = (version: string) => spawn('git', ['tag', '-a', version, '
 export const pushTag = () => spawn('git', ['push', '--tags']);
 export const pushCode = () => spawn('git', ['push']);
 
-export const publish = async (latestTag: string, customer?: boolean, verboseMode?: boolean) => {
+export const publish = async (latestTag: string | Record<string, string>[], customer?: boolean, verboseMode?: boolean) => {
   let featureTag = ''
-  const _latestTag = latestTag.split('\n')[0]
+  const _latestTag: Record<string, string>[] = typeof latestTag === 'string' ? [{release: latestTag}] : latestTag
   if (verboseMode) {
     featureTag = await showVerbose(_latestTag)
   } else if (!customer) {
-    console.log('当前最新值为:', latestTag.split('\n')[0]);
-    featureTag = getFeatureVersion(_latestTag, 'patch')
+    console.log('当前最新值为:', latestTag);
+    featureTag = getFeatureVersion(Object.values(_latestTag[0])[0], 'patch')
   }
   console.log('即将发布为:', featureTag);
   addTag(featureTag).stdout.on('end', () => {
@@ -46,25 +46,28 @@ export const getFeatureVersion = (tag: string, mode: 'major' | 'minor' | 'patch'
   return array.join('.');
 }
 
-export const showVerbose = async (tag: string) => {
-  const oldVersion = tag;
-  const next = {
-    major: getFeatureVersion(tag, 'major'),
-    minor: getFeatureVersion(tag, 'minor'),
-    patch: getFeatureVersion(tag, 'patch'),
-  };
+export const showVerbose = async (tag: Record<string, string>[]) => {
+  const oldVersions = tag;
+  const next = oldVersions.reduce((res, item) => {
+    const key = Object.keys(item)[0]
+    const value = Object.values(item)[0]
+    return {
+      ...res,
+      [`major${key === 'release' ? '' : `(${key})`}`]: getFeatureVersion(value, 'major'),
+      [`minor${key === 'release' ? '' : `(${key})`}`]: getFeatureVersion(value, 'minor'),
+      [`patch${key === 'release' ? '' : `(${key})`}`]: getFeatureVersion(value, 'patch'),
+    }
+  }, {});
   let prompts = inquirer.createPromptModule();
   const res = await inquirer.prompt([
     {
       type: 'list',
       name: 'release',
-      message: `\n当前获取到的最新版是 ${ oldVersion }\n你想发布哪个版本?`,
+      message: `\n当前获取到的最新版是 ${ oldVersions.map(item => Object.values(item)[0]).join('、') }\n你想发布哪个版本?`,
       default: 'patch',
       pageSize: 10,
       choices: [
-        { value: 'major', name: `major (${ next.major })` },
-        { value: 'minor', name: `minor (${ next.minor })` },
-        { value: 'patch', name: `patch (${ next.patch })` },
+        ...Object.keys(next).map(key => ({value: next[key], name: `${key} (${next[key]})`})),
         new inquirer.Separator(),
         { value: 'custom', name: 'custom...' },
       ],
@@ -72,17 +75,20 @@ export const showVerbose = async (tag: string) => {
     {
       type: 'input',
       name: 'newVersion',
-      message: '请输入你的版本号（例如2.3.3）:',
-      default: getFeatureVersion(tag, 'patch').replace(getPureTag(tag), ''),
+      message: '请输入你完整的版本号:',
+      default: getFeatureVersion(Object.values(oldVersions[0])[0], 'patch'),
       when: (previousAnswer_1) => previousAnswer_1.release === 'custom',
-      filter: version_1 => version_1.trim().replace(/^[=v]+/, ''),
+      // filter: version_1 => version_1.trim().replace(/^[=v]+/, ''),
       validate: (newVersion_1: string) => {
-        return /^\d+$/.test(newVersion_1.split('.').join('')) ? true : '请输入正确的版本号（例如2.3.3 或 v2.3.3）';
+        // return /^\d+$/.test(newVersion_1.split('.').join('')) ? true : '请输入正确的版本号（例如2.3.3 或 v2.3.3）';
+        return newVersion_1.trim().includes('-v') ? true : '请输入正确的版本号';
       },
     },
   ]);
-  return res.release === 'custom' ? `${getPureTag(tag)}${res.newVersion}` : next[res.release as keyof typeof next];
+  return res.release === 'custom' ? res.newVersion : res.release;
 }
 
 export const getPureTag = (tag: string) => tag.slice(0, tag.lastIndexOf('v') + 1)
+
+export const getPureVersion = (tag: string) => tag.slice(0, tag.lastIndexOf('v') + 1)
 
