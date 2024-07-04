@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.1](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.8.0...v1.8.1) (2024-07-04)
+
+
+### Bug Fixes
+
+* update argReverseRelease ([d68f5a3](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/d68f5a3da5c950eb58aa8069bee274618f49d5fd))
+
 ## [1.8.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.7.0...v1.8.0) (2024-07-04)
 
 
