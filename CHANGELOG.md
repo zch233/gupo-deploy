@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.7.0...v1.8.0) (2024-07-04)
+
+
+### Features
+
+* add reverseRelease ([6cbee2f](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/6cbee2f3d2271b93b8584cc2335ad07444f81d9c))
+* remove verbose in newRelease ([5d84f7b](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/5d84f7b0928ef92c089894283705331ca8773c10))
+
 ## [1.7.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.6.1...v1.7.0) (2024-07-04)
 
 
