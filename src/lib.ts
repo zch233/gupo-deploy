@@ -4,7 +4,7 @@ import {spawn} from 'child_process';
 export const getRemoteTags = () => spawn('git', ['fetch', '--tags']);
 export const getLatestTag = () => spawn('git', ['describe']);
 export const getLatestTags = (currentTag: string) => spawn('git', ['tag', '-l', '--sort=-v:refname', `${currentTag}*`]);
-export const addTag = (version: string) => spawn('git', ['tag', '-a', version, '-m', 'auto deploy version']);
+export const addTag = (version: string) => spawn('git', ['tag', '-a', version, '-m', `${new Date().toLocaleString()}: auto deploy version`]);
 export const pushTag = () => spawn('git', ['push', '--tags']);
 export const pushCode = () => spawn('git', ['push']);
 
@@ -22,6 +22,7 @@ export const publish = async (latestTag: string | Record<string, string>, custom
     console.log('新增成功~');
     pushTag().stdout.on('end', () => {
       console.log('发布成功~');
+      console.log(new Date().toLocaleString());
     });
     pushTag().on('error', (chunk) => {
       console.log('发布失败~');
