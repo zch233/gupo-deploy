@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.8.1...v1.9.0) (2024-07-05)
+
+
+### Features
+
+* add time log ([80b7986](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/80b79868c9126a58cd2c8614ae0ea7edf1211ea8))
+
 ### [1.8.1](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.8.0...v1.8.1) (2024-07-04)
 
 
