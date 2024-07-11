@@ -3,10 +3,10 @@
 import { getLatestTag, getLatestTags, getPureVersion, getRemoteTags, publish, pushCode } from './lib';
 import path from 'node:path';
 
-const isQuicklyMode = process.argv.findIndex(v => v === '-ss') >= 0;
-const shouldPushCode = process.argv.findIndex(v => v === '-p' || v === '-push') >= 0;
-const verboseMode = process.argv.findIndex(v => v === '--verbose') >= 0;
-const releaseAsIndex = process.argv.findIndex(v => v === '--release_as');
+const isQuicklyMode = process.argv.findIndex(v => ['--fast_release', '-ss'].includes(v)) >= 0;
+const shouldPushCode = process.argv.findIndex(v => ['--push', '-p'].includes(v)) >= 0;
+const verboseMode = process.argv.findIndex(v => ['--verbose'].includes(v)) >= 0;
+const releaseAsIndex = process.argv.findIndex(v => ['--release_as', '-as'].includes(v));
 const releaseAs = releaseAsIndex >= 0 ? process.argv[releaseAsIndex + 1] : undefined;
 
 if (shouldPushCode) pushCode()
@@ -25,11 +25,11 @@ if (isQuicklyMode) {
     })
   });
 } else {
-  const argModeIndex = process.argv.findIndex(v => v === '--mode');
-  const argTagIndex = process.argv.findIndex(v => v === '--oss_tag');
-  const argEnvDirIndex = process.argv.findIndex(v => v === '--env_dir');
-  const argNewReleaseIndex = process.argv.findIndex(v => v === '--new_release');
-  const argReverseIndex = process.argv.findIndex(v => v === '--reverse');
+  const argModeIndex = process.argv.findIndex(v => ['--mode', '-m'].includes(v));
+  const argTagIndex = process.argv.findIndex(v => ['--oss_tag', '-t'].includes(v));
+  const argEnvDirIndex = process.argv.findIndex(v => ['--env_dir', '-e'].includes(v));
+  const argNewReleaseIndex = process.argv.findIndex(v => ['--new_release', '-n'].includes(v));
+  const argReverseIndex = process.argv.findIndex(v => ['--reverse', '-r'].includes(v));
   const argMode = argModeIndex >= 0 ? process.argv[argModeIndex + 1] : undefined;
   const argTag = argTagIndex >= 0 ? process.argv[argTagIndex + 1] : undefined;
   const envDir = argEnvDirIndex >= 0 ? process.argv[argEnvDirIndex + 1] : '';
