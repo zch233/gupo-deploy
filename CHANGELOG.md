@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.9.2](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.9.1...v1.9.2) (2024-07-26)
+
+
+### Bug Fixes
+
+* fix isQuicklyMode tag ([6c725f2](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/6c725f22c201c30b1ba7f910af1d292d45daf78e))
+
 ### [1.9.1](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.9.0...v1.9.1) (2024-07-11)
 
 ## [1.9.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.8.1...v1.9.0) (2024-07-05)
