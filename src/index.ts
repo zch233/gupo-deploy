@@ -17,7 +17,7 @@ if (isQuicklyMode) {
     getLatestTag().stdout.on('data', chunk => gitTagData += chunk.toString())
     getLatestTag().stdout.on('end', () => {
       if (gitTagData) {
-        publish(gitTagData)
+        publish(gitTagData.split('.').map((v, i) => i === gitTagData.length - 1 ? v.replace(/[^0-9]/g, '') : v).join('.'))
       } else {
         console.log('未获取到当前分支下最新的标签~')
         process.exit(0);
