@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.9.3...v1.10.0) (2024-08-02)
+
+
+### Features
+
+* add delay after publish ([e479553](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/e47955386b15dbc510f7b1ab2d488af8d693a733))
+
 ### [1.9.3](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.9.2...v1.9.3) (2024-07-26)
 
 
