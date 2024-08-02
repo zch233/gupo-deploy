@@ -20,9 +20,10 @@ export const publish = async (latestTag: string | Record<string, string>, custom
   console.log('即将发布为:', featureTag);
   addTag(featureTag).stdout.on('end', () => {
     console.log('新增成功~');
-    pushTag().stdout.on('end', () => {
+    pushTag().stdout.on('end', async () => {
       console.log('发布成功~');
       console.log(new Date().toLocaleString());
+      await new Promise(s => setTimeout(s, 1000))
     });
     pushTag().on('error', (chunk) => {
       console.log('发布失败~');
