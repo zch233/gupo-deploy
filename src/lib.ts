@@ -91,5 +91,5 @@ export const showVerbose = async (tag: Record<string, string>) => {
 
 export const getPureTag = (tag: string) => tag.slice(0, tag.lastIndexOf('v') + 1)
 
-export const getPureVersion = (tag: string) => tag.slice(0, tag.lastIndexOf('v') + 1)
+export const getPureVersion = (tag: string) => tag.slice(tag.lastIndexOf('v') + 1)
 
