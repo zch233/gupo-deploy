@@ -9,7 +9,7 @@ export const pushTag = () => spawn('git', ['push', '--tags']);
 export const pushCode = () => spawn('git', ['push']);
 
 export const publish = async (latestTag: string | Record<string, string>, customer?: boolean, verboseMode?: boolean) => {
-  let featureTag = ''
+  let featureTag = customer ? (latestTag as string) : ''
   const _latestTag: Record<string, string> = typeof latestTag === 'string' ? {release: latestTag} : latestTag
   if (verboseMode) {
     featureTag = await showVerbose(_latestTag)

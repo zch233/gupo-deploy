@@ -77,7 +77,7 @@ if (isQuicklyMode) {
         })
       ]).then(() => {
         console.log('读取成功~');
-        publish({gray: gitTagsDataGray.split('\n')[0] || `${gitTagsGray}0.0.0`, release: gitTagsDataRelease.split('\n')[0] || `${gitTagsRelease}0.0.0`}, !!releaseAs, true)
+        publish({gray: gitTagsDataGray.split('\n')[0] || `${gitTagsGray}0.0.0`, release: gitTagsDataRelease.split('\n')[0] || `${gitTagsRelease}0.0.0`}, false, true)
       }).catch(() => {
         console.log('你的环境不行，读取失败了');
       })
