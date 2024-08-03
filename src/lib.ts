@@ -23,6 +23,7 @@ export const publish = async (latestTag: string | Record<string, string>, custom
     pushTag().stdout.on('end', async () => {
       console.log('发布成功~');
       console.log(new Date().toLocaleString());
+      logPipeUrl()
       await new Promise(s => setTimeout(s, 1000))
     });
     pushTag().on('error', (chunk) => {
@@ -57,6 +58,7 @@ export const showVerbose = async (tag: Record<string, string>) => {
       [`major${key === 'release' ? '' : `(${key})`}`]: getFeatureVersion(value, 'major'),
       [`minor${key === 'release' ? '' : `(${key})`}`]: getFeatureVersion(value, 'minor'),
       [`patch${key === 'release' ? '' : `(${key})`}`]: getFeatureVersion(value, 'patch'),
+      [`custom${key === 'release' ? '' : `(${key})`}`]: `custom${key === 'release' ? '' : `(${key})`}`
     }
   }, {});
   let prompts = inquirer.createPromptModule();
@@ -68,28 +70,44 @@ export const showVerbose = async (tag: Record<string, string>) => {
       default: 'patch',
       pageSize: 10,
       choices: [
-        ...Object.keys(next).map(key => ({value: next[key], name: `${key} (${next[key]})`})),
+        ...Object.keys(next).map(key => ({value: next[key], name: `${key} (${key.includes('custom') ? '...' : next[key]})`})),
         new inquirer.Separator(),
-        { value: 'custom', name: 'custom...' },
+        { value: 'custom(completely)', name: 'custom completely...' },
       ],
     },
+    ...Object.keys(oldVersions).map(key => ({
+      type: 'input',
+      name: `newVersion${key === 'release' ? '' : `(${key})`}`,
+      message: '请输入你的版本号（例如2.3.3）:',
+      default: getPureVersion(getFeatureVersion(oldVersions[key], 'patch')),
+      when: (previousAnswer: Record<any, any>) => previousAnswer.release === `custom${key === 'release' ? '' : `(${key})`}`,
+      filter: (version: string) => version.trim().replace(/^[=v]+/, ''),
+      validate: (newVersion: string) => /^\d+$/.test(newVersion.split('.').join('')) ? true : '请输入正确的版本号（例如2.3.3 或 v2.3.3）',
+    })),
     {
       type: 'input',
-      name: 'newVersion',
+      name: 'newVersion(completely)',
       message: '请输入你完整的版本号:',
       default: getFeatureVersion(Object.values(oldVersions)[0], 'patch'),
-      when: (previousAnswer_1) => previousAnswer_1.release === 'custom',
-      // filter: version_1 => version_1.trim().replace(/^[=v]+/, ''),
-      validate: (newVersion_1: string) => {
-        // return /^\d+$/.test(newVersion_1.split('.').join('')) ? true : '请输入正确的版本号（例如2.3.3 或 v2.3.3）';
-        return newVersion_1.trim().includes('-v') ? true : '请输入正确的版本号';
-      },
+      when: (previousAnswer) => previousAnswer.release === 'custom(completely)',
+      validate: (newVersion: string) => newVersion.trim().includes('-v') ? true : '请输入正确的版本号',
     },
   ]);
-  return res.release === 'custom' ? res.newVersion : res.release;
+  const customMap: any = {
+    'custom(gray)': `${getPureTag(oldVersions.gray)}${res['newVersion(gray)']}`,
+    'custom': `${getPureTag(oldVersions.release)}${res['newVersion']}`,
+    'custom(completely)': res['newVersion(completely)'],
+  }
+  return customMap[res.release] || res.release
 }
 
 export const getPureTag = (tag: string) => tag.slice(0, tag.lastIndexOf('v') + 1)
 
 export const getPureVersion = (tag: string) => tag.slice(tag.lastIndexOf('v') + 1)
 
+export const logPipeUrl = () => {
+  const pipe = process.env.OSS_PIPE
+  if (pipe) {
+    console.log(`https://flow.aliyun.com/pipelines/${pipe}/history`)
+  }
+}
