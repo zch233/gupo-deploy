@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.3](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.11.2...v1.11.3) (2024-08-05)
+
+
+### Bug Fixes
+
+* fix customMap ([96027d7](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/96027d7174ed369c1af44dc0e0f48849e48e5460))
+
 ### [1.11.2](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.11.1...v1.11.2) (2024-08-05)
 
 
