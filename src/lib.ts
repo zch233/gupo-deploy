@@ -67,7 +67,7 @@ export const showVerbose = async (tag: Record<string, string>) => {
       type: 'list',
       name: 'release',
       message: `\n当前获取到的最新版是 ${ Object.values(oldVersions).join('、') }\n你想发布哪个版本?`,
-      default: 'patch',
+      default: getFeatureVersion(Object.values(oldVersions)[0], 'patch'),
       pageSize: 10,
       choices: [
         ...Object.keys(next).map(key => ({value: next[key], name: `${key} (${key.includes('custom') ? '...' : next[key]})`})),
