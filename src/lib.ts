@@ -106,15 +106,19 @@ export const getPureTag = (tag: string) => tag.slice(0, tag.lastIndexOf('v') + 1
 export const getPureVersion = (tag: string) => tag.slice(tag.lastIndexOf('v') + 1)
 
 export const logPipeUrl = (tag: string) => {
-  const pipe = process.env.OSS_PIPE
-  const num = process.env.OSS_MARGIN
+  const argPipeIndex = process.argv.findIndex(v => ['--oss_pipe', '-op'].includes(v));
+  const argPipe = argPipeIndex >= 0 ? process.argv[argPipeIndex + 1] : undefined;
+  const argMarginIndex = process.argv.findIndex(v => ['--oss_margin', '-om'].includes(v));
+  const argMargin = argMarginIndex >= 0 ? process.argv[argMarginIndex + 1] : undefined;
+  const pipe = argPipe || process.env.OSS_PIPE
+  const margin = argMargin || process.env.OSS_MARGIN
 
   if (pipe) {
     const tagSignal = tag.split('-')[0]
     console.log(`https://flow.aliyun.com/pipelines/${pipe}/history?${tag}`)
     if (tagSignal) {
       const tagNumber = spawnSync('git', ['tag', '-l', '--sort=-v:refname', `${tagSignal.replace('gray', '')}*`]).stdout.toString().trim().split('\n').length;
-      console.log(`https://flow.aliyun.com/pipelines/${pipe}/builds/${tagNumber + Number(num || 0)}`)
+      console.log(`https://flow.aliyun.com/pipelines/${pipe}/builds/${tagNumber + Number(margin || 0)}`)
     }
   }
 }

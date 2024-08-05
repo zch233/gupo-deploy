@@ -26,7 +26,7 @@ if (isQuicklyMode) {
   });
 } else {
   const argModeIndex = process.argv.findIndex(v => ['--mode', '-m'].includes(v));
-  const argTagIndex = process.argv.findIndex(v => ['--oss_tag', '-t'].includes(v));
+  const argTagIndex = process.argv.findIndex(v => ['--oss_tag', '-ot'].includes(v));
   const argEnvDirIndex = process.argv.findIndex(v => ['--env_dir', '-e'].includes(v));
   const argNewReleaseIndex = process.argv.findIndex(v => ['--new_release', '-n'].includes(v));
   const argReverseIndex = process.argv.findIndex(v => ['--reverse', '-r'].includes(v));
