@@ -94,8 +94,8 @@ export const showVerbose = async (tag: Record<string, string>) => {
     },
   ]);
   const customMap: any = {
-    'custom(gray)': `${getPureTag(oldVersions.gray)}${res['newVersion(gray)']}`,
-    'custom': `${getPureTag(oldVersions.release)}${res['newVersion']}`,
+    'custom(gray)': `${getPureTag(oldVersions.gray || '')}${res['newVersion(gray)']}`,
+    'custom': `${getPureTag(oldVersions.release || '')}${res['newVersion']}`,
     'custom(completely)': res['newVersion(completely)'],
   }
   return customMap[res.release] || res.release
