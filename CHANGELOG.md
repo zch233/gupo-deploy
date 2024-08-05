@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.2](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.11.1...v1.11.2) (2024-08-05)
+
+
+### Bug Fixes
+
+* fix pipe arg ([154cd05](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/154cd054e3a833898ec4e927af04e11a1d510809))
+
 ### [1.11.1](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.11.0...v1.11.1) (2024-08-05)
 
 
