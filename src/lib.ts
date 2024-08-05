@@ -23,8 +23,8 @@ export const publish = async (latestTag: string | Record<string, string>, custom
     pushTag().stdout.on('end', async () => {
       console.log('发布成功~');
       console.log(new Date().toLocaleString());
-      logPipeUrl(featureTag)
       await new Promise(s => setTimeout(s, 1000))
+      logPipeUrl(featureTag)
     });
     pushTag().on('error', (chunk) => {
       console.log('发布失败~');
