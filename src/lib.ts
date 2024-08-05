@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import {spawn} from 'child_process';
+import {spawn, spawnSync} from 'child_process';
 
 export const getRemoteTags = () => spawn('git', ['fetch', '--tags']);
 export const getLatestTag = () => spawn('git', ['describe']);
@@ -23,7 +23,7 @@ export const publish = async (latestTag: string | Record<string, string>, custom
     pushTag().stdout.on('end', async () => {
       console.log('发布成功~');
       console.log(new Date().toLocaleString());
-      logPipeUrl()
+      logPipeUrl(featureTag)
       await new Promise(s => setTimeout(s, 1000))
     });
     pushTag().on('error', (chunk) => {
@@ -105,9 +105,16 @@ export const getPureTag = (tag: string) => tag.slice(0, tag.lastIndexOf('v') + 1
 
 export const getPureVersion = (tag: string) => tag.slice(tag.lastIndexOf('v') + 1)
 
-export const logPipeUrl = () => {
+export const logPipeUrl = (tag: string) => {
   const pipe = process.env.OSS_PIPE
+  const num = process.env.OSS_MARGIN
+
   if (pipe) {
-    console.log(`https://flow.aliyun.com/pipelines/${pipe}/history`)
+    const tagSignal = tag.split('-')[0]
+    console.log(`https://flow.aliyun.com/pipelines/${pipe}/history?${tag}`)
+    if (tagSignal) {
+      const tagNumber = spawnSync('git', ['tag', '-l', '--sort=-v:refname', `${tagSignal.replace('gray', '')}*`]).stdout.toString().trim().split('\n').length;
+      console.log(`https://flow.aliyun.com/pipelines/${pipe}/builds/${tagNumber + Number(num || 0)}`)
+    }
   }
 }
