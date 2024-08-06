@@ -19,13 +19,12 @@
   "devDependencies": {
     "@types/inquirer": "9.0.3",
     "@types/node": "18.16.18",
-    "standard-version": "^9.5.0"
+    "dotenv": "16.0.3",
+    "inquirer": "8.2.5",
+    "standard-version": "9.5.0"
   },
   "publishConfig": {
     "registry": "https://packages.aliyun.com/5eb3e37038076f00011bcd4a/npm/npm-registry/"
   },
-  "dependencies": {
-    "dotenv": "16.0.3",
-    "inquirer": "8.2.5"
-  }
+  "dependencies": {}
 }
