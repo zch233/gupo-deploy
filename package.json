@@ -1,6 +1,6 @@
 {
   "name": "gupo-deploy",
-  "version": "1.11.4",
+  "version": "1.12.0",
   "bin": {
     "gupo-deploy": "dist/index.js"
   },
@@ -15,7 +15,7 @@
     "dev": "npm run compile --watch",
     "compile": "tsc --skipLibCheck",
     "release": "npm run compile && standard-version && npm publish",
-    "debug":"npm run compile && npm pack"
+    "debug": "npm run compile && npm pack"
   },
   "devDependencies": {
     "@types/inquirer": "9.0.3",
