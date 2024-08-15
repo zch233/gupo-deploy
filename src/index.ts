@@ -9,21 +9,15 @@ const verboseMode = process.argv.findIndex(v => ['--verbose'].includes(v)) >= 0;
 const releaseAsIndex = process.argv.findIndex(v => ['--release_as', '-as'].includes(v));
 const releaseAs = releaseAsIndex >= 0 ? process.argv[releaseAsIndex + 1] : undefined;
 
-if (shouldPushCode) pushCode()
 if (isQuicklyMode) {
-  getRemoteTags().stdout.on('end', () => {
-    console.log('拉取成功~');
-    let gitTagData = ''
-    getLatestTag().stdout.on('data', chunk => gitTagData += chunk.toString())
-    getLatestTag().stdout.on('end', () => {
-      if (gitTagData) {
-        publish(gitTagData.split('.').map((v, i) => i === gitTagData.split('.').length - 1 ? v.replace(/[^0-9]/g, '') : v).join('.'))
-      } else {
-        console.log('未获取到当前分支下最新的标签~')
-        process.exit(0);
-      }
-    })
-  });
+  getRemoteTags()
+  const gitTagData = getLatestTag()
+  if (gitTagData) {
+    publish(gitTagData.split('.').map((v, i) => i === gitTagData.split('.').length - 1 ? v.replace(/[^0-9]/g, '') : v).join('.'))
+  } else {
+    console.log('未获取到当前分支下最新的标签~')
+    process.exit(0);
+  }
 } else {
   const argModeIndex = process.argv.findIndex(v => ['--mode', '-m'].includes(v));
   const argTagIndex = process.argv.findIndex(v => ['--oss_tag', '-ot'].includes(v));
@@ -42,55 +36,43 @@ if (isQuicklyMode) {
     console.log('未设置 OSS_TAG 环境变量');
     process.exit(0);
   }
-
-  getRemoteTags().stdout.on('end', () => {
-    console.log('拉取成功~');
-
-    const currentTagSplitArray = currentTag.split('-')
-    const isCurrentTagGray = currentTagSplitArray[0]?.includes('gray')
-    const currentTagWithRelease = [currentTagSplitArray[0].replace('gray', '')].concat(currentTagSplitArray.slice(1)).join('-')
-    const currentTagWithGray = [`${currentTagSplitArray[0]}gray`].concat(currentTagSplitArray.slice(1)).join('-')
-    if (argNewReleaseIndex >= 0) {
-      let gitTagsRelease = ''
-      let gitTagsGray = ''
-      let gitTagsDataRelease = ''
-      let gitTagsDataGray = ''
-      if (isCurrentTagGray) {
-        gitTagsRelease = currentTagWithRelease
-        gitTagsGray = currentTag
-      } else {
-        gitTagsRelease = currentTag
-        gitTagsGray = currentTagWithGray
-      }
-      Promise.all([
-        new Promise(resolve => {
-          getLatestTags(gitTagsRelease!).stdout.on('data', chunk => gitTagsDataRelease += chunk.toString());
-          getLatestTags(gitTagsRelease!).stdout.on('end', () => {
-            resolve(gitTagsDataRelease)
-          });
-        }),
-        new Promise(resolve => {
-          getLatestTags(gitTagsGray!).stdout.on('data', chunk => gitTagsDataGray += chunk.toString());
-          getLatestTags(gitTagsGray!).stdout.on('end', () => {
-            resolve(gitTagsDataGray)
-          });
-        })
-      ]).then(() => {
-        console.log('读取成功~');
-        publish({gray: gitTagsDataGray.split('\n')[0] || `${gitTagsGray}0.0.0`, release: gitTagsDataRelease.split('\n')[0] || `${gitTagsRelease}0.0.0`}, false, true)
-      }).catch(() => {
-        console.log('你的环境不行，读取失败了');
-      })
+  getRemoteTags()
+  const currentTagSplitArray = currentTag.split('-')
+  const isCurrentTagGray = currentTagSplitArray[0]?.includes('gray')
+  const currentTagWithRelease = [currentTagSplitArray[0].replace('gray', '')].concat(currentTagSplitArray.slice(1)).join('-')
+  const currentTagWithGray = [`${currentTagSplitArray[0]}gray`].concat(currentTagSplitArray.slice(1)).join('-')
+  if (argNewReleaseIndex >= 0) {
+    let gitTagsRelease = ''
+    let gitTagsGray = ''
+    let gitTagsDataRelease = ''
+    let gitTagsDataGray = ''
+    if (isCurrentTagGray) {
+      gitTagsRelease = currentTagWithRelease
+      gitTagsGray = currentTag
     } else {
-      let gitTagsData = ''
-      if (argReverseIndex >= 0) currentTag = isCurrentTagGray ? currentTagWithRelease : currentTagWithGray
-      getLatestTags(currentTag).stdout.on('data', chunk => gitTagsData += chunk.toString());
-      getLatestTags(currentTag).stdout.on('end', () => {
-        console.log('读取成功~');
-        const latestTag = releaseAs ? `${currentTag}${getPureVersion(releaseAs)}` : (gitTagsData.split('\n')[0] || `${currentTag}0.0.0`);
-        publish(latestTag, !!releaseAs, verboseMode)
-      });
+      gitTagsRelease = currentTag
+      gitTagsGray = currentTagWithGray
     }
-
-  });
+    Promise.all([
+      new Promise(resolve => {
+        gitTagsDataRelease = getLatestTags(gitTagsRelease!)
+        resolve(gitTagsDataRelease)
+      }),
+      new Promise(resolve => {
+        gitTagsDataGray = getLatestTags(gitTagsGray!)
+        resolve(gitTagsDataGray)
+      })
+    ]).then(() => {
+      console.log('读取成功~');
+      publish({gray: gitTagsDataGray.split('\n')[0] || `${gitTagsGray}0.0.0`, release: gitTagsDataRelease.split('\n')[0] || `${gitTagsRelease}0.0.0`}, false, true)
+    }).catch(() => {
+      console.log('你的环境不行，读取失败了');
+    })
+  } else {
+    if (argReverseIndex >= 0) currentTag = isCurrentTagGray ? currentTagWithRelease : currentTagWithGray
+    const gitTagsData = getLatestTags(currentTag)
+    const latestTag = releaseAs ? `${currentTag}${getPureVersion(releaseAs)}` : (gitTagsData.split('\n')[0] || `${currentTag}0.0.0`);
+    publish(latestTag, !!releaseAs, verboseMode)
+  }
 }
+if (shouldPushCode) pushCode()

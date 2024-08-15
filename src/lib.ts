@@ -1,12 +1,56 @@
 import inquirer from 'inquirer';
-import {spawn, spawnSync} from 'child_process';
+import {spawnSync, SpawnSyncReturns} from 'node:child_process';
 
-export const getRemoteTags = () => spawn('git', ['fetch', '--tags']);
-export const getLatestTag = () => spawn('git', ['describe']);
-export const getLatestTags = (currentTag: string) => spawn('git', ['tag', '-l', '--sort=-v:refname', `${currentTag}*`]);
-export const addTag = (version: string) => spawn('git', ['tag', '-a', version, '-m', `${new Date().toLocaleString()}: auto deploy version`]);
-export const pushTag = () => spawn('git', ['push', '--tags']);
-export const pushCode = () => spawn('git', ['push']);
+export const throwError = (origin: SpawnSyncReturns<Buffer>, text?: string) => {
+  console.log(origin.stderr.toString());
+  console.log('Error: ', text || '出错了！')
+  return process.exit(0);
+}
+export const getRemoteTags = () => {
+  const fetchData = spawnSync('git', ['fetch', '--tags'])
+  if (fetchData.stderr.toString()) {
+    console.log('请手动运行 `git push --tags`');
+    throwError(fetchData, '拉取标签失败~')
+  }
+  console.log('拉取标签成功~');
+  return fetchData.stdout.toString().trim()
+};
+export const getLatestTag = () => {
+  const fetchData = spawnSync('git', ['describe'])
+  if (fetchData.stderr.toString()) throwError(fetchData, '读取标签失败~')
+  console.log('读取标签成功~');
+  return fetchData.stdout.toString().trim()
+};
+export const getLatestTags = (currentTag: string) => {
+  const fetchData = spawnSync('git', ['tag', '-l', '--sort=-v:refname', `${currentTag}*`])
+  if (fetchData.stderr.toString()) throwError(fetchData, '读取标签失败~')
+  console.log('读取标签成功~');
+  return fetchData.stdout.toString().trim()
+};
+export const addTag = (version: string) => {
+  const fetchData = spawnSync('git', ['tag', '-a', version, '-m', `${new Date().toLocaleString()}: auto deploy version`])
+  if (fetchData.stderr.toString()) throwError(fetchData, '新增标签失败~')
+  console.log('新增标签成功~');
+  return fetchData.stdout.toString().trim()
+}
+export const pushTag = () => {
+  const fetchData = spawnSync('git', ['push', '--tags'])
+  if (fetchData.stderr.toString()) throwError(fetchData, '推送标签失败~')
+  console.log('推送标签成功~');
+  return fetchData.stdout.toString().trim()
+};
+export const pushCode = () => {
+  const fetchData = spawnSync('git', ['push'])
+  if (fetchData.stderr.toString()) throwError(fetchData, '推送代码失败~')
+  console.log('推送代码成功~');
+  return fetchData.stdout.toString().trim()
+};
+
+export const getGitUrl = (link?: boolean) => {
+  const fetchData = spawnSync('git', ['remote', 'get-url', 'origin'])
+  if (fetchData.stderr.toString()) throwError(fetchData, '读取git地址失败~')
+  return link ? fetchData.stdout.toString().trim().replace('git@', '').replace('.git', '') : fetchData.stdout.toString().trim()
+}
 
 export const publish = async (latestTag: string | Record<string, string>, customer?: boolean, verboseMode?: boolean) => {
   let featureTag = customer ? (latestTag as string) : ''
@@ -18,20 +62,12 @@ export const publish = async (latestTag: string | Record<string, string>, custom
     featureTag = getFeatureVersion(Object.values(_latestTag)[0], 'patch')
   }
   console.log('即将发布为:', featureTag);
-  addTag(featureTag).stdout.on('end', () => {
-    console.log('新增成功~');
-    pushTag().stdout.on('end', async () => {
-      console.log('发布成功~');
-      console.log(new Date().toLocaleString());
-      await new Promise(s => setTimeout(s, 1000))
-      logPipeUrl(featureTag)
-    });
-    pushTag().on('error', (chunk) => {
-      console.log('发布失败~');
-      console.log('请手动运行 `git push --tags`');
-      console.log('错误信息:', chunk.toString());
-    });
-  });
+  addTag(featureTag)
+  pushTag()
+  console.log('发布成功~');
+  console.log(new Date().toLocaleString());
+  await new Promise(s => setTimeout(s, 1000))
+  logPipeUrl(featureTag)
 }
 
 export const getFeatureVersion = (tag: string, mode: 'major' | 'minor' | 'patch') => {
@@ -117,11 +153,11 @@ export const logPipeUrl = (tag: string) => {
     const tagSignal = tag.split('-')[0]
     console.log(`https://flow.aliyun.com/pipelines/${pipe}/history?${tag}`)
     if (tagSignal) {
-      const tagNumber = spawnSync('git', ['tag', '-l', '--sort=-v:refname', `${tagSignal.replace('gray', '')}*`]).stdout.toString().trim().split('\n').length;
+      const tagNumber = getLatestTags(tagSignal.replace('gray', '')).split('\n').length;
       console.log(`https://flow.aliyun.com/pipelines/${pipe}/builds/${tagNumber + Number(margin || 0)}`)
     }
   } else {
-    const gitUrl = spawnSync('git', ['remote', 'get-url', 'origin']).stdout.toString().trim().replace('git@', '').replace('.git', '')
+    const gitUrl = getGitUrl(true)
     if (gitUrl) console.log(`${gitUrl.indexOf('http') === 0 ? gitUrl : gitUrl.replace(':', '/')}/pipeline`)
   }
 }
