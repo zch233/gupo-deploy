@@ -120,5 +120,8 @@ export const logPipeUrl = (tag: string) => {
       const tagNumber = spawnSync('git', ['tag', '-l', '--sort=-v:refname', `${tagSignal.replace('gray', '')}*`]).stdout.toString().trim().split('\n').length;
       console.log(`https://flow.aliyun.com/pipelines/${pipe}/builds/${tagNumber + Number(margin || 0)}`)
     }
+  } else {
+    const gitUrl = spawnSync('git', ['remote', 'get-url', 'origin']).stdout.toString().trim().replace('git@', '').replace('.git', '')
+    if (gitUrl) console.log(`${gitUrl.indexOf('http') === 0 ? gitUrl : gitUrl.replace(':', '/')}/pipeline`)
   }
 }
