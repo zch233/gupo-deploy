@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import {spawnSync, SpawnSyncReturns} from 'node:child_process';
+import {spawnSync, SpawnSyncReturns} from 'child_process';
 
 export const validateAndThrowError = (origin: SpawnSyncReturns<Buffer>, text?: string) => {
   if (origin.status === 0) return
