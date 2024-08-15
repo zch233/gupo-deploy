@@ -14,7 +14,8 @@
   "scripts": {
     "dev": "npm run compile --watch",
     "compile": "tsc --skipLibCheck",
-    "release": "npm run compile && standard-version && npm publish"
+    "release": "npm run compile && standard-version && npm publish",
+    "debug":"npm run compile && npm pack"
   },
   "devDependencies": {
     "@types/inquirer": "9.0.3",
