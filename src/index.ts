@@ -53,21 +53,10 @@ if (isQuicklyMode) {
       gitTagsRelease = currentTag
       gitTagsGray = currentTagWithGray
     }
-    Promise.all([
-      new Promise(resolve => {
-        gitTagsDataRelease = getLatestTags(gitTagsRelease!)
-        resolve(gitTagsDataRelease)
-      }),
-      new Promise(resolve => {
-        gitTagsDataGray = getLatestTags(gitTagsGray!)
-        resolve(gitTagsDataGray)
-      })
-    ]).then(() => {
-      console.log('读取成功~');
-      publish({gray: gitTagsDataGray.split('\n')[0] || `${gitTagsGray}0.0.0`, release: gitTagsDataRelease.split('\n')[0] || `${gitTagsRelease}0.0.0`}, false, true)
-    }).catch(() => {
-      console.log('你的环境不行，读取失败了');
-    })
+    gitTagsDataRelease = getLatestTags(gitTagsRelease!)
+    gitTagsDataGray = getLatestTags(gitTagsGray!)
+    console.log('读取成功~');
+    publish({gray: gitTagsDataGray.split('\n')[0] || `${gitTagsGray}0.0.0`, release: gitTagsDataRelease.split('\n')[0] || `${gitTagsRelease}0.0.0`}, false, true)
   } else {
     if (argReverseIndex >= 0) currentTag = isCurrentTagGray ? currentTagWithRelease : currentTagWithGray
     const gitTagsData = getLatestTags(currentTag)
