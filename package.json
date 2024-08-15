@@ -1,6 +1,6 @@
 {
   "name": "gupo-deploy",
-  "version": "1.12.2",
+  "version": "1.12.22",
   "bin": {
     "gupo-deploy": "dist/index.js"
   },
@@ -20,12 +20,13 @@
   "devDependencies": {
     "@types/inquirer": "9.0.3",
     "@types/node": "18.16.18",
-    "dotenv": "16.0.3",
-    "inquirer": "8.2.5",
     "standard-version": "9.5.0"
   },
   "publishConfig": {
     "registry": "https://packages.aliyun.com/5eb3e37038076f00011bcd4a/npm/npm-registry/"
   },
-  "dependencies": {}
+  "dependencies": {
+    "dotenv": "8.2.0",
+    "inquirer": "6.5.2"
+  }
 }
