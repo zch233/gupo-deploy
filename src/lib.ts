@@ -1,54 +1,61 @@
 import inquirer from 'inquirer';
 import {spawnSync, SpawnSyncReturns} from 'node:child_process';
 
-export const throwError = (origin: SpawnSyncReturns<Buffer>, text?: string) => {
+export const validateAndThrowError = (origin: SpawnSyncReturns<Buffer>, text?: string) => {
+  if (origin.status === 0) return
   console.log(origin.stderr.toString());
-  console.log('Error: ', text || '出错了！')
+  console.log(new Error(text || '出错了！'))
   return process.exit(0);
 }
+
 export const getRemoteTags = () => {
   const fetchData = spawnSync('git', ['fetch', '--tags'])
-  if (fetchData.stderr.toString()) {
+  if (fetchData.status !== 0) {
     console.log('请手动运行 `git push --tags`');
-    throwError(fetchData, '拉取标签失败~')
+    validateAndThrowError(fetchData, '拉取标签失败~')
   }
   console.log('拉取标签成功~');
   return fetchData.stdout.toString().trim()
 };
+
 export const getLatestTag = () => {
   const fetchData = spawnSync('git', ['describe'])
-  if (fetchData.stderr.toString()) throwError(fetchData, '读取标签失败~')
+  validateAndThrowError(fetchData, '读取标签失败~')
   console.log('读取标签成功~');
   return fetchData.stdout.toString().trim()
 };
-export const getLatestTags = (currentTag: string) => {
+
+export const getLatestTags = (currentTag: string, noLog?: boolean) => {
   const fetchData = spawnSync('git', ['tag', '-l', '--sort=-v:refname', `${currentTag}*`])
-  if (fetchData.stderr.toString()) throwError(fetchData, '读取标签失败~')
-  console.log('读取标签成功~');
+  validateAndThrowError(fetchData, '读取标签失败~')
+  !noLog && console.log('读取标签成功~');
   return fetchData.stdout.toString().trim()
 };
+
 export const addTag = (version: string) => {
   const fetchData = spawnSync('git', ['tag', '-a', version, '-m', `${new Date().toLocaleString()}: auto deploy version`])
-  if (fetchData.stderr.toString()) throwError(fetchData, '新增标签失败~')
+  validateAndThrowError(fetchData, '新增标签失败~')
   console.log('新增标签成功~');
   return fetchData.stdout.toString().trim()
 }
+
 export const pushTag = () => {
   const fetchData = spawnSync('git', ['push', '--tags'])
-  if (fetchData.stderr.toString()) throwError(fetchData, '推送标签失败~')
+  validateAndThrowError(fetchData, '推送标签失败~')
   console.log('推送标签成功~');
   return fetchData.stdout.toString().trim()
 };
+
 export const pushCode = () => {
   const fetchData = spawnSync('git', ['push'])
-  if (fetchData.stderr.toString()) throwError(fetchData, '推送代码失败~')
+  validateAndThrowError(fetchData, '推送代码失败~')
   console.log('推送代码成功~');
   return fetchData.stdout.toString().trim()
 };
 
 export const getGitUrl = (link?: boolean) => {
   const fetchData = spawnSync('git', ['remote', 'get-url', 'origin'])
-  if (fetchData.stderr.toString()) throwError(fetchData, '读取git地址失败~')
+  validateAndThrowError(fetchData, '读取git地址失败~')
   return link ? fetchData.stdout.toString().trim().replace('git@', '').replace('.git', '') : fetchData.stdout.toString().trim()
 }
 
@@ -153,11 +160,11 @@ export const logPipeUrl = (tag: string) => {
     const tagSignal = tag.split('-')[0]
     console.log(`https://flow.aliyun.com/pipelines/${pipe}/history?${tag}`)
     if (tagSignal) {
-      const tagNumber = getLatestTags(tagSignal.replace('gray', '')).split('\n').length;
+      const tagNumber = getLatestTags(tagSignal.replace('gray', ''), true).split('\n').length;
       console.log(`https://flow.aliyun.com/pipelines/${pipe}/builds/${tagNumber + Number(margin || 0)}`)
     }
   } else {
     const gitUrl = getGitUrl(true)
-    if (gitUrl) console.log(`${gitUrl.indexOf('http') === 0 ? gitUrl : gitUrl.replace(':', '/')}/pipeline`)
+    if (gitUrl) console.log(`${gitUrl.indexOf('http') === 0 ? gitUrl : `https://${gitUrl.replace(':', '/')}`}/pipeline`)
   }
 }
