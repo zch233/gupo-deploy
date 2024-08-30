@@ -12,7 +12,7 @@ export const validateAndThrowError = (origin: SpawnSyncReturns<Buffer>, text?: s
 export const getRemoteTags = () => {
   const fetchData = spawnSync('git', ['fetch', '--tags'])
   if (fetchData.status !== 0) {
-    console.log('请手动运行 `git push --tags`');
+    console.log('请手动运行 `git fetch --tags`');
     validateAndThrowError(fetchData, '拉取标签失败~')
   }
   console.log('拉取标签成功~');
@@ -42,7 +42,10 @@ export const addTag = (version: string) => {
 
 export const pushTag = () => {
   const fetchData = spawnSync('git', ['push', '--tags'])
-  validateAndThrowError(fetchData, '推送标签失败~')
+  if (fetchData.status !== 0) {
+    console.log('请手动运行 `git push --tags`');
+    validateAndThrowError(fetchData, '推送标签失败~')
+  }
   console.log('推送标签成功~');
   return fetchData.stdout.toString().trim()
 };
