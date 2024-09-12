@@ -2,6 +2,177 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.12.24](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.12.23...v1.12.24) (2024-08-30)
+
+
+### Bug Fixes
+
+* fix error tips ([1dfb533](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/1dfb53326946f9554074ab7966f634df057a6721))
+
+### [1.12.23](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.12.2...v1.12.23) (2024-08-15)
+
+### [1.12.2](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.12.1...v1.12.2) (2024-08-15)
+
+### [1.12.1](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.12.0...v1.12.1) (2024-08-15)
+
+## [1.12.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.11.4...v1.12.0) (2024-08-15)
+
+
+### Features
+
+* **refactor:** clean code with sync ([320e0eb](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/320e0ebde740b4b4bcf9f3206707ee427312d4de))
+
+
+### Bug Fixes
+
+* fix error log ([39d10be](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/39d10bebf8c4246fa1e508c927cf8a9c27741c70))
+* fix error log ([e73fcf9](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/e73fcf927b2b15317efe426e3bd0f39e7d1174a2))
+
+### [1.11.4](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.11.3...v1.11.4) (2024-08-15)
+
+
+### Bug Fixes
+
+* update logPipeUrl with no pipe ([168b700](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/168b7006c0cf2218c7d6b6c01eaf01079b9acb4d))
+
+### [1.11.3](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.11.2...v1.11.3) (2024-08-05)
+
+
+### Bug Fixes
+
+* fix customMap ([96027d7](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/96027d7174ed369c1af44dc0e0f48849e48e5460))
+
+### [1.11.2](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.11.1...v1.11.2) (2024-08-05)
+
+
+### Bug Fixes
+
+* fix pipe arg ([154cd05](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/154cd054e3a833898ec4e927af04e11a1d510809))
+
+### [1.11.1](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.11.0...v1.11.1) (2024-08-05)
+
+
+### Bug Fixes
+
+* fix pipe log time ([e24c2d5](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/e24c2d5af626791804d36a773e3bcc8b1ddb6a97))
+
+## [1.11.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.10.2...v1.11.0) (2024-08-05)
+
+
+### Features
+
+* update pipe log ([9c70479](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/9c7047964050199caa80c4976e907ae6fb8b39ba))
+
+### [1.10.2](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.10.1...v1.10.2) (2024-08-05)
+
+
+### Bug Fixes
+
+* fix list default ([b10c1d8](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/b10c1d89a086a4bb7ccb2dfab2ccc4dec4404c77))
+
+### [1.10.1](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.10.0...v1.10.1) (2024-08-03)
+
+
+### Bug Fixes
+
+* fix getPureVersion ([8f070d6](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/8f070d65fdff87aabaa184b56de9d84fa4c5addb))
+* fix release as ([2d2c69f](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/2d2c69f0da0c7648dc8d489b3569469089eb7c34))
+* update release custom ([2bbafc7](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/2bbafc789e945b1259b5d691a1fdc96addc32ad7))
+
+## [1.10.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.9.3...v1.10.0) (2024-08-02)
+
+
+### Features
+
+* add delay after publish ([e479553](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/e47955386b15dbc510f7b1ab2d488af8d693a733))
+
+### [1.9.3](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.9.2...v1.9.3) (2024-07-26)
+
+
+### Bug Fixes
+
+* fix isQuicklyMode tag ([912574a](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/912574ab598282cde0661c0b1a6b5a345509372a))
+
+### [1.9.2](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.9.1...v1.9.2) (2024-07-26)
+
+
+### Bug Fixes
+
+* fix isQuicklyMode tag ([6c725f2](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/6c725f22c201c30b1ba7f910af1d292d45daf78e))
+
+### [1.9.1](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.9.0...v1.9.1) (2024-07-11)
+
+## [1.9.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.8.1...v1.9.0) (2024-07-05)
+
+
+### Features
+
+* add time log ([80b7986](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/80b79868c9126a58cd2c8614ae0ea7edf1211ea8))
+
+### [1.8.1](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.8.0...v1.8.1) (2024-07-04)
+
+
+### Bug Fixes
+
+* update argReverseRelease ([d68f5a3](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/d68f5a3da5c950eb58aa8069bee274618f49d5fd))
+
+## [1.8.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.7.0...v1.8.0) (2024-07-04)
+
+
+### Features
+
+* add reverseRelease ([6cbee2f](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/6cbee2f3d2271b93b8584cc2335ad07444f81d9c))
+* remove verbose in newRelease ([5d84f7b](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/5d84f7b0928ef92c089894283705331ca8773c10))
+
+## [1.7.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.6.1...v1.7.0) (2024-07-04)
+
+
+### Features
+
+* add --newRelease ([98a85c6](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/98a85c6497d8174aacadae0303453d8b9e2fe306))
+
+### [1.6.1](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.6.0...v1.6.1) (2024-06-29)
+
+## [1.6.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.5.4...v1.6.0) (2024-06-29)
+
+
+### Features
+
+* update zhHans ([eda22db](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/eda22dbb4ca003d8e196bbe569d2b2326ccf309a))
+
+
+### Bug Fixes
+
+* fix custom default ([c9873c6](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/c9873c686ec9313f9db6b29e2dda4a0dbffc7591))
+
+### [1.5.4](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.5.3...v1.5.4) (2024-05-11)
+
+
+### Bug Fixes
+
+* fix custom version ([c17678d](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/c17678d5aeacac0f5cd7145941c8f053437668eb))
+
+### [1.5.3](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.5.2...v1.5.3) (2024-05-11)
+
+
+### Bug Fixes
+
+* fix custom & major version ([ef24550](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/ef2455064160dd448587e2eb70e629e8b0ca3789))
+
+### [1.5.2](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.5.1...v1.5.2) (2024-01-16)
+
+
+### Bug Fixes
+
+* fix verbose version ([ff3e7c7](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/ff3e7c7ac861d784bf0ce7c95df594f31afa666c))
+
+### [1.5.1](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.5.0...v1.5.1) (2024-01-16)
+
+
+### Bug Fixes
+
+* fix verbose version ([2ad235a](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/2ad235a0cec2f93b3bf0e14d5e6ca2655dee3fb8))
+
 ## [1.5.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.3.0...v1.5.0) (2023-12-18)
 
 
