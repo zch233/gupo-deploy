@@ -52,7 +52,10 @@ export const pushTag = () => {
 
 export const pushCode = () => {
   const fetchData = spawnSync('git', ['push'])
-  validateAndThrowError(fetchData, '推送代码失败~')
+  if (fetchData.status !== 0) {
+    console.log(new Error('推送代码失败~'))
+    return process.exit(0);
+  }
   console.log('推送代码成功~');
   return fetchData.stdout.toString().trim()
 };
