@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.12.25](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.12.24...v1.12.25) (2024-09-20)
+
+
+### Bug Fixes
+
+* update pushCode errorHandler ([419fa9b](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/419fa9b51970ff2af7ee5aedb66545285c246532))
+* update tagNumber ([449ddf9](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/449ddf945d3fcf84c7e10f536bb26ac8ec92d512))
+
 ### [1.12.24](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.12.23...v1.12.24) (2024-08-30)
 
 
