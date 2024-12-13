@@ -167,7 +167,7 @@ export const logPipeUrl = (tag: string) => {
     const tagSignal = tag.split('-')[0]
     console.log(`https://flow.aliyun.com/pipelines/${pipe}/history?${tag}`)
     if (tagSignal) {
-      const tagNumber = getLatestTags(tagSignal.replace('gray', ''), true).split('\n').filter(v => tagSignal.includes('local') ? v.includes('local') : !v.includes('local')).length;
+      const tagNumber = getLatestTags(tagSignal.replace('gray', ''), true).split('\n').filter(v => tagSignal.includes('local') ? true : !v.includes('local')).length;
       console.log(`https://flow.aliyun.com/pipelines/${pipe}/builds/${tagNumber + Number(margin || 0)}`)
     }
   } else {
