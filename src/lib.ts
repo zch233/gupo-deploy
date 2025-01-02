@@ -85,7 +85,7 @@ export const publish = async (latestTag: string | Record<string, string>, custom
 }
 
 export const getFeatureVersion = (tag: string, mode: 'major' | 'minor' | 'patch') => {
-  const array = tag.split('.');
+  const array = ((tag.match(/\d+(\.\d+)*(?=\s|$)/g) || [])[0] || '').split('.');
   if (mode === 'patch' && array.length > 1) {
     array[array.length - 1] = (Number(array.slice(-1)) + 1).toString();
   } else if (mode === 'minor' && array.length === 3) {
