@@ -91,9 +91,9 @@ export const getFeatureVersion = (tag: string, mode: 'major' | 'minor' | 'patch'
     versionArray[versionArray.length - 1] = (Number(versionArray.at(-1)) + 1).toString();
   } else if (mode === 'minor') {
     if (versionArray.length === 1) {
-      versionArray[versionArray.length - 1] = (Number(versionArray[0]) + 1).toString();
+      versionArray[versionArray.length - 1] = (Number(versionArray.at(-1)) + 1).toString();
     } else {
-      versionArray[versionArray.length - 2] = (Number(versionArray[0]) + 1).toString();
+      versionArray[versionArray.length - 2] = (Number(versionArray.at(-2)) + 1).toString();
       versionArray[versionArray.length - 1] = '0';
     }
   } else if (mode === 'major') {
