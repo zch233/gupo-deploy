@@ -85,18 +85,25 @@ export const publish = async (latestTag: string | Record<string, string>, custom
 }
 
 export const getFeatureVersion = (tag: string, mode: 'major' | 'minor' | 'patch') => {
-  const array = ((tag.match(/\d+(\.\d+)*(?=\s|$)/g) || [])[0] || '').split('.');
-  if (mode === 'patch' && array.length > 1) {
-    array[array.length - 1] = (Number(array.slice(-1)) + 1).toString();
-  } else if (mode === 'minor' && array.length === 3) {
-    array[array.length - 2] = (Number(array.slice(-2, -1)) + 1).toString();
-    array[array.length - 1] = '0'
+  const versionStr = ((tag.match(/\d+(\.\d+)*(?=\s|$)/g) || [])[0] || '')
+  const versionArray = versionStr.split('.');
+  if (mode === 'patch') {
+    versionArray[versionArray.length - 1] = (Number(versionArray.at(-1)) + 1).toString();
+  } else if (mode === 'minor') {
+    if (versionArray.length === 1) {
+      versionArray[versionArray.length - 1] = (Number(versionArray[0]) + 1).toString();
+    } else {
+      versionArray[versionArray.length - 2] = (Number(versionArray[0]) + 1).toString();
+      versionArray[versionArray.length - 1] = '0';
+    }
   } else if (mode === 'major') {
-    array[0] = array[0].slice(0, -1) + (Number(array[0].slice(array[0].lastIndexOf('v') + 1)) + 1).toString();
-    array[array.length - 1] = '0'
-    array[array.length - 2] = '0'
+    versionArray[0] = (Number(versionArray[0]) + 1).toString();
+    versionArray.map((_, i) => {
+      if (i === versionArray.length - 1) return
+      if (versionArray.at(0 - i - 1)) versionArray[versionArray.length - i -1] = '0'
+    })
   }
-  return array.join('.');
+  return tag.replace(versionStr, '') + versionArray.join('.');
 }
 
 export const showVerbose = async (tag: Record<string, string>) => {
