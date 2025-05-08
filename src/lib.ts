@@ -65,6 +65,11 @@ export const getGitUrl = (link?: boolean) => {
   validateAndThrowError(fetchData, '读取git地址失败~')
   return link ? fetchData.stdout.toString().trim().replace('git@', '').replace('.git', '') : fetchData.stdout.toString().trim()
 }
+export const getGitBranch = () => {
+  const fetchData = spawnSync('git', ['branch', '--show-current'])
+  validateAndThrowError(fetchData, '读取git分支失败~')
+  return fetchData.stdout.toString().trim()
+}
 
 export const publish = async (latestTag: string | Record<string, string>, customer?: boolean, verboseMode?: boolean) => {
   let featureTag = customer ? (latestTag as string) : ''
