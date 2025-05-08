@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.13.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.12.30...v1.13.0) (2025-05-08)
+
+
+### Features
+
+* add auth release ([fece327](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/fece3272af45345d8240f048276c334bbd72c957))
+
 ### [1.12.30](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.12.29...v1.12.30) (2025-01-07)
 
 
