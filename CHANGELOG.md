@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.13.0...v1.14.0) (2025-05-26)
+
+
+### Features
+
+* add auto_list ([06bf74d](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/06bf74d4e93c7e792cb1ee570c2af3f07f985de3))
+
 ## [1.13.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.12.30...v1.13.0) (2025-05-08)
 
 
