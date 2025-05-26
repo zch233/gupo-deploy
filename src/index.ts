@@ -50,11 +50,15 @@ if (isAutoMode) {
           if (code === 200) {
             fs.writeFileSync(configPath, JSON.stringify({...configData, [gitUrl]: data}, null, 2), 'utf8')
             currentInfos = data.filter(v => isAutoModeList ? v : v.branch === gitBranch)
-            s('done')
             if (currentInfos.length === 0) {
-              console.log('该分支未部署流水线');
+              // 如果匹配不到准确的分支，那就进行模糊匹配（如 dev/xiaoshan => main/xiaoshan/main）
+              currentInfos = data.filter(v => v.branch.includes(gitBranch.split('/')[1]))
+            }
+            if (currentInfos.length === 0) {
+              console.log('该分支未部署流水线，你可以加入 -l 参数展示所有列表');
               process.exit(0);
             }
+            s('done')
           }
         });
       })
@@ -86,6 +90,7 @@ if (isAutoMode) {
       const gitTagsData = getLatestTags(currentTag)
       const latestTag = !!releaseAs ? `${currentTag}${getPureVersion(releaseAs)}` : (gitTagsData.split('\n')[0] || `${currentTag}0.0.0`);
       publish(latestTag, !!releaseAs, verboseMode).then(() => {
+        console.log(_currentInfo.flow.build.replace('current', 'history'))
         console.log(_currentInfo.flow.build)
       })
     })
