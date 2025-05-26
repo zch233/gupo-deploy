@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.1](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.14.0...v1.14.1) (2025-05-26)
+
+
+### Bug Fixes
+
+* add dev branch search ([1871b76](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/1871b76775fb9524638ef284c752eaa97ce23be1))
+
 ## [1.14.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.13.0...v1.14.0) (2025-05-26)
 
 
