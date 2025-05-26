@@ -19,6 +19,7 @@ import inquirer from 'inquirer';
 const isQuicklyMode = process.argv.findIndex(v => ['--fast_release', '-ss'].includes(v)) >= 0;
 const isAutoMode = process.argv.findIndex(v => ['--auto_release', '-a'].includes(v)) >= 0;
 const isAutoModeRefresh = process.argv.findIndex(v => ['--auto_release_refresh', '-f'].includes(v)) >= 0;
+const isAutoModeList = process.argv.findIndex(v => ['--list', '-l'].includes(v)) >= 0;
 const shouldPushCode = process.argv.findIndex(v => ['--push', '-p'].includes(v)) >= 0;
 const verboseMode = process.argv.findIndex(v => ['--verbose'].includes(v)) >= 0;
 const releaseAsIndex = process.argv.findIndex(v => ['--release_as', '-as'].includes(v));
@@ -48,7 +49,7 @@ if (isAutoMode) {
           const {code, data} = JSON.parse(responseData) as {code: number, data: any[]}
           if (code === 200) {
             fs.writeFileSync(configPath, JSON.stringify({...configData, [gitUrl]: data}, null, 2), 'utf8')
-            currentInfos = data.filter(v => v.branch === gitBranch)
+            currentInfos = data.filter(v => isAutoModeList ? v : v.branch === gitBranch)
             s('done')
             if (currentInfos.length === 0) {
               console.log('该分支未部署流水线');
