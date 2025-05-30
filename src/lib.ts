@@ -187,3 +187,13 @@ export const logPipeUrl = (tag: string) => {
     if (gitUrl) console.log(`${gitUrl.indexOf('http') === 0 ? gitUrl : `https://${gitUrl.replace(':', '/')}`}/pipeline`)
   }
 }
+
+export const searchCurrentRepoPipe = (gitBranch: string, data: any[]) => {
+  const isAutoModeList = process.argv.findIndex(v => ['--list', '-l'].includes(v)) >= 0;
+  let _currentInfos = data?.filter((v: any) => isAutoModeList ? v : v.branch === gitBranch)
+  if (_currentInfos.length === 0) {
+    // 如果匹配不到准确的分支，那就进行模糊匹配（如 dev/xiaoshan => main/xiaoshan/main）
+    _currentInfos = data?.filter((v: any) => v.branch.includes(gitBranch.split('/')[1]))
+  }
+  return _currentInfos
+}

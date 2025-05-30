@@ -8,7 +8,7 @@ import {
   getPureVersion,
   getRemoteTags,
   publish,
-  pushCode,
+  pushCode, searchCurrentRepoPipe,
 } from './lib';
 import path from 'node:path';
 import fs from 'node:fs';
@@ -37,7 +37,7 @@ if (isAutoMode) {
   } else {
     fs.writeFileSync(configPath, JSON.stringify({}, null, 2), 'utf8')
   }
-  let currentInfos = configData[gitUrl]?.filter((v: any) => v.branch === gitBranch)
+  let currentInfos = searchCurrentRepoPipe(gitBranch, configData[gitUrl])
   new Promise((s) => {
     if (!currentInfos?.length || isAutoModeRefresh) {
       https.get(`https://uat-api.group-ds.com/bmo-manage-api/innerapi/saber/repo-branches?repo_url=${gitUrl}`, res => {
@@ -49,11 +49,7 @@ if (isAutoMode) {
           const {code, data} = JSON.parse(responseData) as {code: number, data: any[]}
           if (code === 200) {
             fs.writeFileSync(configPath, JSON.stringify({...configData, [gitUrl]: data}, null, 2), 'utf8')
-            currentInfos = data.filter(v => isAutoModeList ? v : v.branch === gitBranch)
-            if (currentInfos.length === 0) {
-              // 如果匹配不到准确的分支，那就进行模糊匹配（如 dev/xiaoshan => main/xiaoshan/main）
-              currentInfos = data.filter(v => v.branch.includes(gitBranch.split('/')[1]))
-            }
+            currentInfos = searchCurrentRepoPipe(gitBranch, data)
             if (currentInfos.length === 0) {
               console.log('该分支未部署流水线，你可以加入 -l 参数展示所有列表');
               process.exit(0);
