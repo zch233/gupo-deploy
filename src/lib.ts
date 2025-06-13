@@ -1,6 +1,7 @@
 import inquirer from 'inquirer';
 import {spawnSync} from 'child_process';
 import type { SpawnSyncReturns } from 'child_process';
+import { argMargin, argPipe, isAutoModeList, shouldPushCode } from './args';
 
 export const validateAndThrowError = (origin: SpawnSyncReturns<Buffer>, text?: string) => {
   if (origin.status === 0) return
@@ -87,6 +88,7 @@ export const publish = async (latestTag: string | Record<string, string>, custom
   console.log(new Date().toLocaleString());
   await new Promise(s => setTimeout(s, 1000))
   logPipeUrl(featureTag)
+  if (shouldPushCode) pushCode()
 }
 
 export const getFeatureVersion = (tag: string, mode: 'major' | 'minor' | 'patch') => {
@@ -168,10 +170,6 @@ export const getPureTag = (tag: string) => tag.slice(0, tag.lastIndexOf('v') + 1
 export const getPureVersion = (tag: string) => tag.slice(tag.lastIndexOf('v') + 1)
 
 export const logPipeUrl = (tag: string) => {
-  const argPipeIndex = process.argv.findIndex(v => ['--oss_pipe', '-op'].includes(v));
-  const argPipe = argPipeIndex >= 0 ? process.argv[argPipeIndex + 1] : undefined;
-  const argMarginIndex = process.argv.findIndex(v => ['--oss_margin', '-om'].includes(v));
-  const argMargin = argMarginIndex >= 0 ? process.argv[argMarginIndex + 1] : undefined;
   const pipe = argPipe || process.env.OSS_PIPE
   const margin = argMargin || process.env.OSS_MARGIN
 
@@ -189,7 +187,6 @@ export const logPipeUrl = (tag: string) => {
 }
 
 export const searchCurrentRepoPipe = (gitBranch: string, data: any[]) => {
-  const isAutoModeList = process.argv.findIndex(v => ['--list', '-l'].includes(v)) >= 0;
   let _currentInfos = data?.filter((v: any) => isAutoModeList ? v : v.branch === gitBranch)
   if (_currentInfos.length === 0) {
     // 如果匹配不到准确的分支，那就进行模糊匹配（如 dev/xiaoshan => main/xiaoshan/main）
