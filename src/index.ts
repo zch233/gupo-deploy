@@ -50,7 +50,7 @@ if (isAutoMode) {
           if (code === 200) {
             fs.writeFileSync(configPath, JSON.stringify({...configData, [gitUrl]: data}, null, 2), 'utf8')
             currentInfos = searchCurrentRepoPipe(gitBranch, data)
-            if (currentInfos.length === 0) {
+            if (currentInfos?.length === 0) {
               console.log('该分支未部署流水线，你可以加入 -l 参数展示所有列表');
               process.exit(0);
             }
@@ -62,16 +62,16 @@ if (isAutoMode) {
       s('done')
     }
   }).then(() => {
-    let _currentInfo = currentInfos[0]
+    let _currentInfo = currentInfos?.[0]
     new Promise((s) => {
-      if (currentInfos.length > 1) {
+      if (currentInfos?.length > 1) {
         inquirer.prompt([{
           type: 'list',
           name: 'area',
           message: '哪儿个地区?',
           default: _currentInfo,
           pageSize: 10,
-          choices: currentInfos.map((v: any) => ({name: `${v.area_name}_${v.cluster.name}`, value: v}))
+          choices: currentInfos?.map((v: any) => ({name: `${v.area_name}_${v.cluster.name}`, value: v}))
         }]).then((reanswers) => {
           _currentInfo = reanswers.area
           s('done')

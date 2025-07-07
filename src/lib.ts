@@ -188,7 +188,7 @@ export const logPipeUrl = (tag: string) => {
 
 export const searchCurrentRepoPipe = (gitBranch: string, data: any[]) => {
   let _currentInfos = data?.filter((v: any) => isAutoModeList ? v : v.branch === gitBranch)
-  if (_currentInfos.length === 0) {
+  if (_currentInfos?.length === 0) {
     // 如果匹配不到准确的分支，那就进行模糊匹配（如 dev/xiaoshan => main/xiaoshan/main）
     _currentInfos = data?.filter((v: any) => v.branch.includes(gitBranch.split('/')[1]))
   }
