@@ -17,6 +17,8 @@ import https from 'node:https'
 import inquirer from 'inquirer';
 import autocomplete from 'inquirer-autocomplete-prompt';
 
+inquirer.registerPrompt('autocomplete', autocomplete);
+
 import {
   argMode, argNewReleaseIndex,
   argReverseIndex, argTag,
@@ -64,20 +66,20 @@ if (isAutoMode) {
       s('done')
     }
   }).then(() => {
-    inquirer.registerPrompt('autocomplete', autocomplete);
     let _currentInfo = currentInfos?.[0]
     new Promise((s) => {
       if (currentInfos?.length > 1) {
+        const choices = currentInfos?.map((v: any) => ({name: `${v.area_name}_${v.cluster.name}`, value: v}))
         inquirer.prompt([{
           type: 'autocomplete',
           name: 'area',
           message: '哪儿个地区?',
           default: _currentInfo,
           pageSize: 10,
-          choices: currentInfos?.map((v: any) => ({name: `${v.area_name}_${v.cluster.name}`, value: v})),
+          choices,
           source: (_: any, input = '') => {
             // 根据输入过滤选项（不区分大小写）
-            return currentInfos?.filter(choice =>
+            return choices?.filter(choice =>
               choice.name.toLowerCase().includes(input.toLowerCase())
             );
           }
