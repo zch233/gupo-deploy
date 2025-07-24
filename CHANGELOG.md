@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.14.4...v1.15.0) (2025-07-24)
+
+
+### Features
+
+* add inquirer list search ([921e044](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/921e0446211d7235865f30c34c15c5f0a1fc049c))
+
 ### [1.14.4](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.14.3...v1.14.4) (2025-07-07)
 
 
