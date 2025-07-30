@@ -60,7 +60,9 @@ if (isAutoMode) {
             }
             s('done')
           } else {
+            console.log('---');
             console.log('网络坏了，你可以暂时使用 gupo-deploy --oss_tag xxx 来发布');
+            console.log('---');
             r('done')
           }
         });
