@@ -42,7 +42,7 @@ if (isAutoMode) {
     fs.writeFileSync(configPath, JSON.stringify({}, null, 2), 'utf8')
   }
   let currentInfos = searchCurrentRepoPipe(gitBranch, configData[gitUrl])
-  new Promise((s) => {
+  new Promise((s, r) => {
     if (!currentInfos?.length || isAutoModeRefresh) {
       https.get(`https://uat-api.group-ds.com/bmo-manage-api/innerapi/saber/repo-branches?repo_url=${gitUrl}`, res => {
         let responseData = '';
@@ -59,6 +59,9 @@ if (isAutoMode) {
               process.exit(0);
             }
             s('done')
+          } else {
+            console.log('网络坏了，你可以暂时使用 gupo-deploy --oss_tag xxx 来发布');
+            r('done')
           }
         });
       })
