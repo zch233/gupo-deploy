@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.15.3](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.15.2...v1.15.3) (2025-07-30)
+
+
+### Bug Fixes
+
+* fix request error ([a0825b1](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/a0825b1e8cc9758529af4cb681d0cf39a6a862ad))
+
 ### [1.15.2](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.15.1...v1.15.2) (2025-07-30)
 
 
