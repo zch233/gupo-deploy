@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.16.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.15.3...v1.16.0) (2025-10-15)
+
+
+### Features
+
+* add showSaberInfo ([efac5f6](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/efac5f60e908afc628db17b4c26c9c713ef534e2))
+* refactor ([f8b1640](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/f8b1640ee11881ecde14b1fc50a10403ebc60f25))
+* update error tips ([b189ba6](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/b189ba6f32f438d268e6a0ebb2af0b79366e062a))
+
+
+### Bug Fixes
+
+* fix currentTag resolution ([3aee589](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/3aee589f805d44a87acf14786f4624cdbe7a06e7))
+
 ### [1.15.3](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.15.2...v1.15.3) (2025-07-30)
 
 
