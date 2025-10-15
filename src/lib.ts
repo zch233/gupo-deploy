@@ -194,3 +194,5 @@ export const searchCurrentRepoPipe = (gitBranch: string, data: any[]) => {
   }
   return _currentInfos
 }
+
+export const getSaberInfo = (gitUrl: string) => `https://uat-api.group-ds.com/bmo-manage-api/innerapi/saber/repo-branches?repo_url=${gitUrl}`

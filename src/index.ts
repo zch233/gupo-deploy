@@ -6,7 +6,7 @@ import {
   getLatestTag,
   getLatestTags,
   getPureVersion,
-  getRemoteTags,
+  getRemoteTags, getSaberInfo,
   publish,
   searchCurrentRepoPipe,
 } from './lib';
@@ -31,7 +31,7 @@ import {
 } from './args';
 
 if (isAutoMode) {
-  const gitUrl = `https://${getGitUrl(true).replace(':', '/')}`
+  const gitUrlHTTP = `https://${getGitUrl(true).replace(':', '/')}`
   const gitBranch = getGitBranch()
   const configPath = path.join(os.homedir(), 'gupo-deploy.json')
   const isFileExist = fs.existsSync(configPath)
@@ -41,10 +41,10 @@ if (isAutoMode) {
   } else {
     fs.writeFileSync(configPath, JSON.stringify({}, null, 2), 'utf8')
   }
-  let currentInfos = searchCurrentRepoPipe(gitBranch, configData[gitUrl])
+  let currentInfos = searchCurrentRepoPipe(gitBranch, configData[gitUrlHTTP])
   new Promise((s, r) => {
     if (!currentInfos?.length || isAutoModeRefresh) {
-      https.get(`https://uat-api.group-ds.com/bmo-manage-api/innerapi/saber/repo-branches?repo_url=${gitUrl}`, res => {
+      https.get(getSaberInfo(gitUrlHTTP), res => {
         let responseData = '';
         res.on('data', (chunk) => {
           responseData += chunk;
@@ -52,7 +52,7 @@ if (isAutoMode) {
         res.on('end', () => {
           const {code, data} = JSON.parse(responseData) as {code: number, data: any[]}
           if (code === 200) {
-            fs.writeFileSync(configPath, JSON.stringify({...configData, [gitUrl]: data}, null, 2), 'utf8')
+            fs.writeFileSync(configPath, JSON.stringify({...configData, [gitUrlHTTP]: data}, null, 2), 'utf8')
             currentInfos = searchCurrentRepoPipe(gitBranch, data)
             if (currentInfos?.length === 0) {
               console.log('该分支未部署流水线，你可以加入 -l 参数展示所有列表');
