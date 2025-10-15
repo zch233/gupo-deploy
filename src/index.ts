@@ -26,9 +26,16 @@ import {
   isAutoMode,
   isAutoModeRefresh,
   isQuicklyMode,
-  releaseAs,
+  releaseAs, showSaberInfo,
   verboseMode,
 } from './args';
+
+if (showSaberInfo) {
+  console.log('---');
+  console.log(getSaberInfo(`https://${getGitUrl(true).replace(':', '/')}`));
+  console.log('---');
+  process.exit(0);
+}
 
 if (isAutoMode) {
   const gitUrlHTTP = `https://${getGitUrl(true).replace(':', '/')}`

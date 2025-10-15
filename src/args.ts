@@ -18,3 +18,4 @@ export const argMarginIndex = process.argv.findIndex(v => ['--oss_margin', '-om'
 export const argPipe = argPipeIndex >= 0 ? process.argv[argPipeIndex + 1] : undefined;
 export const argMargin = argMarginIndex >= 0 ? process.argv[argMarginIndex + 1] : undefined;
 export const shouldPushCode = process.argv.findIndex(v => ['--push', '-p'].includes(v)) >= 0;
+export const showSaberInfo = process.argv.findIndex(v => ['--info'].includes(v)) >= 0;
