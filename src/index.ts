@@ -109,7 +109,7 @@ if (isAutoMode) {
       }
     }).then(() => {
       getRemoteTags()
-      let currentTag = (_currentInfo.tags.gray || _currentInfo.tags.prod).replace('(.+)', '')
+      let currentTag = (_currentInfo.tags.gray || _currentInfo.tags.prod).replace(/\(.*?\)/g, '')
       if (argReverseIndex >= 0) currentTag = currentTag.replace('gray', '')
       const gitTagsData = getLatestTags(currentTag)
       const latestTag = !!releaseAs ? `${currentTag}${getPureVersion(releaseAs)}` : (gitTagsData.split('\n')[0] || `${currentTag}0.0.0`);
