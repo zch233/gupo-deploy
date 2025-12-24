@@ -142,7 +142,7 @@ if (isAutoMode) {
   const currentTagSplitArray = currentTag.split('-')
   const isCurrentTagGray = currentTagSplitArray[0]?.includes('gray')
   const currentTagWithRelease = [currentTagSplitArray[0].replace('gray', '')].concat(currentTagSplitArray.slice(1)).join('-')
-  const currentTagWithGray = [`${currentTagSplitArray[0]}gray`].concat(currentTagSplitArray.slice(1)).join('-')
+  const currentTagWithGray = [`${currentTagSplitArray[0]}${(currentTag.includes('test-') || currentTag.includes('local-')) ? '' : 'gray'}`].concat(currentTagSplitArray.slice(1)).join('-')
   if (argNewReleaseIndex >= 0) {
     let gitTagsRelease = ''
     let gitTagsGray = ''
