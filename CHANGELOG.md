@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.17.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.12.30...v1.17.0) (2025-12-24)
+
+
+### Features
+
+* add auth release ([fece327](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/fece3272af45345d8240f048276c334bbd72c957))
+* add auto_list ([06bf74d](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/06bf74d4e93c7e792cb1ee570c2af3f07f985de3))
+* add inquirer list search ([921e044](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/921e0446211d7235865f30c34c15c5f0a1fc049c))
+* add showSaberInfo ([efac5f6](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/efac5f60e908afc628db17b4c26c9c713ef534e2))
+* optimize currentTagWithGray ([ca405b7](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/ca405b7236365cb358fd9f09984cc4b506855518))
+* refactor ([f8b1640](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/f8b1640ee11881ecde14b1fc50a10403ebc60f25))
+* update error tips ([b189ba6](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/b189ba6f32f438d268e6a0ebb2af0b79366e062a))
+
+
+### Bug Fixes
+
+* add dev branch search ([1871b76](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/1871b76775fb9524638ef284c752eaa97ce23be1))
+* fix branch search ([bd23a75](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/bd23a7552e5487baa572c59e46b661e872641289))
+* fix currentTag resolution ([3aee589](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/3aee589f805d44a87acf14786f4624cdbe7a06e7))
+* fix inquirer search ([c3943ec](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/c3943ecbf117ba9fa02b9a68ab767452b2d2e97f))
+* fix request error ([a0825b1](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/a0825b1e8cc9758529af4cb681d0cf39a6a862ad))
+* fix request error ([8d614f8](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/8d614f81ef0db3bfc32d2dae8857228bdab9e5d1))
+* fix types ([470c8a7](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/470c8a735b892d71ac8814300365d3822cd3b3a0))
+
 ## [1.16.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.15.3...v1.16.0) (2025-10-15)
 
 
