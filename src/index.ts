@@ -7,7 +7,7 @@ import {
   getLatestTags,
   getPureVersion,
   getRemoteTags, getSaberInfo,
-  publish,
+  publish, request,
   searchCurrentRepoPipe,
 } from './lib';
 import path from 'node:path';
@@ -39,35 +39,24 @@ const main = () => {
   }
   if (showSaberFlow) {
     console.log('---');
-    https.get(getSaberInfo(`https://${ getGitUrl(true).replace(':', '/') }`), res => {
-      let responseData = '';
-      res.on('data', (chunk) => {
-        responseData += chunk;
-      });
-      res.on('end', () => {
-        const { code, data } = JSON.parse(responseData) as { code: number, data: any[] };
-        if (code === 200) {
-          const gitBranch = getGitBranch();
-          const currentInfos = searchCurrentRepoPipe(gitBranch, data);
-          if (currentInfos?.length === 0) {
-            console.log('该分支未部署流水线');
-            console.log('---');
-          } else {
-            currentInfos.map(info => {
-              console.log(`${ info.area_name }(${ info.branch }):`);
-              Object.keys(info.flow).map(key => info.flow[key] && console.log(`${ key }: ${ info.flow[key] }`));
-            });
-            console.log('---');
-          }
+    request(`https://${ getGitUrl(true).replace(':', '/') }`).then(({ code, data }) => {
+      if (code === 200) {
+        const gitBranch = getGitBranch();
+        const currentInfos = searchCurrentRepoPipe(gitBranch, data);
+        if (currentInfos?.length === 0) {
+          console.log('该分支未部署流水线');
+          console.log('---');
         } else {
-          console.log('网络坏了');
+          currentInfos.map(info => {
+            console.log(`${ info.area_name }(${ info.branch }):`);
+            Object.keys(info.flow).map(key => info.flow[key] && console.log(`${ key }: ${ info.flow[key] }`));
+          });
           console.log('---');
         }
-        process.exit(0);
-      });
-    }).on('error', () => {
-      console.log('网络坏了');
-      console.log('---');
+      } else {
+        console.log('网络坏了');
+        console.log('---');
+      }
       process.exit(0);
     });
     return;
@@ -85,35 +74,23 @@ const main = () => {
       fs.writeFileSync(configPath, JSON.stringify({}, null, 2), 'utf8');
     }
     let currentInfos = searchCurrentRepoPipe(gitBranch, configData[gitUrlHTTP]);
-    new Promise((s, r) => {
+    new Promise((s) => {
       if (!currentInfos?.length || isAutoModeRefresh) {
-        https.get(getSaberInfo(gitUrlHTTP), res => {
-          let responseData = '';
-          res.on('data', (chunk) => {
-            responseData += chunk;
-          });
-          res.on('end', () => {
-            const { code, data } = JSON.parse(responseData) as { code: number, data: any[] };
-            if (code === 200) {
-              fs.writeFileSync(configPath, JSON.stringify({ ...configData, [gitUrlHTTP]: data }, null, 2), 'utf8');
-              currentInfos = searchCurrentRepoPipe(gitBranch, data);
-              if (currentInfos?.length === 0) {
-                console.log('该分支未部署流水线，你可以加入 -l 参数展示所有列表');
-                process.exit(0);
-              }
-              s('done');
-            } else {
-              console.log('---');
-              console.log('网络坏了，你可以暂时使用 gupo-deploy --oss_tag xxx 来发布');
-              console.log('---');
-              r('done');
+        request(getSaberInfo(gitUrlHTTP)).then(({ code, data }) => {
+          if (code === 200) {
+            fs.writeFileSync(configPath, JSON.stringify({ ...configData, [gitUrlHTTP]: data }, null, 2), 'utf8');
+            currentInfos = searchCurrentRepoPipe(gitBranch, data);
+            if (currentInfos?.length === 0) {
+              console.log('该分支未部署流水线，你可以加入 -l 参数展示所有列表');
+              process.exit(0);
             }
-          });
-        }).on('error', () => {
-          console.log('---');
-          console.log('网络坏了，你可以暂时使用 gupo-deploy --oss_tag xxx 来发布');
-          console.log('---');
-          r('done');
+            s('done');
+          } else {
+            console.log('---');
+            console.log('网络坏了，你可以暂时使用 gupo-deploy --oss_tag xxx 来发布');
+            console.log('---');
+            process.exit(0);
+          }
         });
       } else {
         s('done');

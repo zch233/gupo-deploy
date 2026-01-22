@@ -2,6 +2,7 @@ import inquirer from 'inquirer';
 import { spawnSync } from 'child_process';
 import type { SpawnSyncReturns } from 'child_process';
 import { argMargin, argPipe, isAutoModeList, shouldPushCode } from './args';
+import https from 'node:https';
 
 export const validateAndThrowError = (origin: SpawnSyncReturns<Buffer>, text?: string) => {
   if (origin.status === 0) return;
@@ -199,3 +200,19 @@ export const searchCurrentRepoPipe = (gitBranch: string, data: any[]) => {
 };
 
 export const getSaberInfo = (gitUrl: string) => `https://uat-api.group-ds.com/bmo-manage-api/innerapi/saber/repo-branches?repo_url=${ gitUrl }`;
+
+export const request = (url: string): Promise<{ code: number, data: any[] }> => new Promise((resolve) => {
+  https.get(getSaberInfo(url), res => {
+    let responseData = '';
+    res.on('data', (chunk) => {
+      responseData += chunk;
+    });
+    res.on('end', () => {
+      resolve(JSON.parse(responseData))
+    });
+  }).on('error', () => {
+    console.log('网络坏了');
+    console.log('---');
+    process.exit(0);
+  });
+})
