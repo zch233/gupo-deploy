@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.18.1](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.18.0...v1.18.1) (2026-01-22)
+
+
+### Bug Fixes
+
+* add debug ([2be251d](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/2be251d2514af6822088c032e0507830e2486dbb))
+* fix showSaberFlow info ([67c5080](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/67c50800c307073d769b779cc58f0b7860e7136b))
+
 ## [1.18.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.17.4...v1.18.0) (2026-01-22)
 
 
