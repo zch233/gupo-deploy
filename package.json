@@ -1,6 +1,6 @@
 {
   "name": "gupo-deploy",
-  "version": "1.17.4",
+  "version": "1.18.0",
   "bin": {
     "gupo-deploy": "dist/index.js",
     "gg": "dist/gg.js"
