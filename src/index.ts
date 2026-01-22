@@ -14,7 +14,6 @@ import {
 import path from 'node:path';
 import fs from 'node:fs';
 import os from 'node:os';
-import https from 'node:https';
 import inquirer from 'inquirer';
 import autocomplete from 'inquirer-autocomplete-prompt';
 
@@ -81,11 +80,11 @@ const main = () => {
           if (code === 200) {
             fs.writeFileSync(configPath, JSON.stringify({ ...configData, [gitUrlHTTP]: data }, null, 2), 'utf8');
             currentInfos = searchCurrentRepoPipe(gitBranch, data);
-            debugLog(gitBranch)
-            debugLog(data)
-            debugLog(currentInfos)
+            debugLog(gitBranch);
+            debugLog(data);
+            debugLog(currentInfos);
             if (currentInfos?.length === 0) {
-              console.log(`该分支未部署流水线${isAutoModeList ? '' : '，你可以加入 -l 参数展示所有列表'}`);
+              console.log(`该分支未部署流水线${ isAutoModeList ? '' : '，你可以加入 -l 参数展示所有列表' }`);
               process.exit(0);
             }
             s('done');
