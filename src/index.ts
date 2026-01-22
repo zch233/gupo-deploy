@@ -48,7 +48,7 @@ const main = () => {
           console.log('---');
         } else {
           currentInfos.map(info => {
-            console.log(`${ info.area_name }(${ info.branch }):`);
+            console.log(`${ info.area_name }_${ info.cluster.name }(${ info.branch }):`);
             Object.keys(info.flow).map(key => info.flow[key] && console.log(`${ key }: ${ info.flow[key] }`));
           });
           console.log('---');
@@ -99,7 +99,10 @@ const main = () => {
       let _currentInfo = currentInfos?.[0];
       new Promise((s) => {
         if (currentInfos?.length > 1) {
-          const choices = currentInfos?.map((v: any) => ({ name: `${ v.area_name }_${ v.cluster.name }_${v.tags.prod?.split('-').slice(0, -1)[2] || ''}`, value: v }));
+          const choices = currentInfos?.map((v: any) => ({
+            name: `${ v.area_name }_${ v.cluster.name }_${ v.tags.prod?.split('-').slice(0, -1)[2] || '' }`,
+            value: v,
+          }));
           inquirer.prompt([{
             type: 'autocomplete',
             name: 'area',
