@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import {
-  debugLog,
   getGitBranch,
   getGitUrl,
   getLatestTag,
@@ -80,9 +79,6 @@ const main = () => {
           if (code === 200) {
             fs.writeFileSync(configPath, JSON.stringify({ ...configData, [gitUrlHTTP]: data }, null, 2), 'utf8');
             currentInfos = searchCurrentRepoPipe(gitBranch, data);
-            debugLog(gitBranch);
-            debugLog(data);
-            debugLog(currentInfos);
             if (currentInfos?.length === 0) {
               console.log(`该分支未部署流水线${ isAutoModeList ? '' : '，你可以加入 -l 参数展示所有列表' }`);
               process.exit(0);
