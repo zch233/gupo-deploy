@@ -3,7 +3,7 @@
   "version": "1.17.2",
   "bin": {
     "gupo-deploy": "dist/index.js",
-    "gg": "dist/index.js --auto_release"
+    "gg": "dist/gg.js"
   },
   "files": [
     "dist"
