@@ -26,7 +26,7 @@ import {
   isAutoMode,
   isAutoModeRefresh,
   isQuicklyMode,
-  releaseAs, showSaberInfo,
+  releaseAs, showSaberFlow, showSaberInfo,
   verboseMode,
 } from './args';
 
@@ -35,6 +35,40 @@ if (showSaberInfo) {
   console.log(getSaberInfo(`https://${getGitUrl(true).replace(':', '/')}`));
   console.log('---');
   process.exit(0);
+}
+if (showSaberFlow) {
+  console.log('---');
+  https.get(getSaberInfo(`https://${getGitUrl(true).replace(':', '/')}`), res => {
+    let responseData = '';
+    res.on('data', (chunk) => {
+      responseData += chunk;
+    });
+    res.on('end', () => {
+      const {code, data} = JSON.parse(responseData) as {code: number, data: any[]}
+      if (code === 200) {
+        const gitBranch = getGitBranch()
+        const currentInfos = searchCurrentRepoPipe(gitBranch, data)
+        if (currentInfos?.length === 0) {
+          console.log('该分支未部署流水线');
+          console.log('---');
+        } else {
+          currentInfos.map(info => {
+            console.log(`${info.area_name}(${info.branch}):`)
+            Object.keys(info.flow).map(key => info.flow[key] && console.log(`${key}: ${info.flow[key]}`))
+          })
+          console.log('---');
+        }
+      } else {
+        console.log('网络坏了');
+        console.log('---');
+      }
+      process.exit(0);
+    });
+  }).on('error', () => {
+    console.log('网络坏了');
+    console.log('---');
+    process.exit(0);
+  });
 }
 
 if (isAutoMode) {
