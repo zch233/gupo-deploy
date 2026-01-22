@@ -1,7 +1,7 @@
 import inquirer from 'inquirer';
 import { spawnSync } from 'child_process';
 import type { SpawnSyncReturns } from 'child_process';
-import { argMargin, argPipe, isAutoModeList, shouldPushCode } from './args';
+import { argMargin, argPipe, isAutoModeList, shouldPushCode, showDebug } from './args';
 import https from 'node:https';
 
 export const validateAndThrowError = (origin: SpawnSyncReturns<Buffer>, text?: string) => {
@@ -202,12 +202,14 @@ export const searchCurrentRepoPipe = (gitBranch: string, data: any[]) => {
 export const getSaberInfo = (gitUrl: string) => `https://uat-api.group-ds.com/bmo-manage-api/innerapi/saber/repo-branches?repo_url=${ gitUrl }`;
 
 export const request = (url: string): Promise<{ code: number, data: any[] }> => new Promise((resolve) => {
+  debugLog(url)
   https.get(getSaberInfo(url), res => {
     let responseData = '';
     res.on('data', (chunk) => {
       responseData += chunk;
     });
     res.on('end', () => {
+      debugLog(responseData)
       resolve(JSON.parse(responseData))
     });
   }).on('error', () => {
@@ -216,3 +218,9 @@ export const request = (url: string): Promise<{ code: number, data: any[] }> => 
     process.exit(0);
   });
 })
+
+export const debugLog = (...args: any[]) => {
+  if (showDebug) {
+    console.log('\x1B[1;32mDEBUG--\x1B[0m', ...args)
+  }
+}

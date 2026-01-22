@@ -20,3 +20,4 @@ export const argMargin = argMarginIndex >= 0 ? process.argv[argMarginIndex + 1] 
 export const shouldPushCode = process.argv.findIndex(v => ['--push', '-p'].includes(v)) >= 0;
 export const showSaberInfo = process.argv.findIndex(v => ['--info'].includes(v)) >= 0;
 export const showSaberFlow = process.argv.findIndex(v => ['--flow'].includes(v)) >= 0;
+export const showDebug = process.argv.findIndex(v => ['--debug'].includes(v)) >= 0;
