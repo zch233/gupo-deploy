@@ -24,7 +24,7 @@ import {
   argMode, argNewReleaseIndex,
   argReverseIndex, argTag,
   envDir,
-  isAutoMode,
+  isAutoMode, isAutoModeList,
   isAutoModeRefresh,
   isQuicklyMode,
   releaseAs, showSaberFlow, showSaberInfo,
@@ -85,7 +85,7 @@ const main = () => {
             debugLog(data)
             debugLog(currentInfos)
             if (currentInfos?.length === 0) {
-              console.log('该分支未部署流水线，你可以加入 -l 参数展示所有列表');
+              console.log(`该分支未部署流水线${isAutoModeList ? '' : '，你可以加入 -l 参数展示所有列表'}`);
               process.exit(0);
             }
             s('done');
