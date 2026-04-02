@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.0](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.18.4...v1.19.0) (2026-04-02)
+
+
+### Features
+
+* update sabar url ([0f70727](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/commit/0f7072718ed5ee9d1ecfd1099f9a8362ee83feac))
+
 ### [1.18.4](https://codeup.aliyun.com/gupo/node-modules/gupo-deploy/compare/v1.18.3...v1.18.4) (2026-01-22)
 
 
