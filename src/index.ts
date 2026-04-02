@@ -26,10 +26,17 @@ import {
   isAutoModeRefresh,
   isQuicklyMode,
   releaseAs, showSaberFlow, showSaberInfo,
+  showVersions,
   verboseMode,
 } from './args';
 
 const main = () => {
+  if (showVersions) {
+    const pkgPath = path.resolve(__dirname, '../package.json');
+    const pkgVersion = JSON.parse(fs.readFileSync(pkgPath, 'utf8')).version;
+    console.log(pkgVersion);
+    process.exit(0);
+  }
   const _responseURL = `https://${ getGitUrl(true).replace(':', '/') }`
   if (showSaberInfo) {
     console.log('✅---');

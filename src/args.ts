@@ -21,3 +21,4 @@ export const shouldPushCode = process.argv.findIndex(v => ['--push', '-p'].inclu
 export const showSaberInfo = process.argv.findIndex(v => ['--info'].includes(v)) >= 0;
 export const showSaberFlow = process.argv.findIndex(v => ['--flow'].includes(v)) >= 0;
 export const showDebug = process.argv.findIndex(v => ['--debug'].includes(v)) >= 0;
+export const showVersions = process.argv.findIndex(v => ['--versions', '--version'].includes(v)) >= 0;

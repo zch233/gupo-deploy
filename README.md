@@ -71,6 +71,8 @@ $ gupo-deploy --help
 
   Options
     --ss // 自动根据当前分支的上一次的 tag 进行快速发布
+    --versions // 输出当前版本号
+    --info // 输出 sabar 部署信息
     --p // 是否推送(push)代码，默认只推送标签
     --oss_tag string // 流水线对应的标签名称(exmaple: test-oss-v)
     --release_as string // 发布版本号(exmaple: 1.0.0)
