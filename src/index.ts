@@ -30,15 +30,16 @@ import {
 } from './args';
 
 const main = () => {
+  const _responseURL = `https://${ getGitUrl(true).replace(':', '/') }`
   if (showSaberInfo) {
-    console.log('---');
-    console.log(getSaberInfo(`https://${ getGitUrl(true).replace(':', '/') }`));
-    console.log('---');
+    console.log('✅---');
+    console.log(getSaberInfo(_responseURL));
+    console.log('✅---');
     process.exit(0);
   }
   if (showSaberFlow) {
     console.log('---');
-    request(`https://${ getGitUrl(true).replace(':', '/') }`).then(({ code, data }) => {
+    request(`${_responseURL}&app_status=0`).then(({ code, data }) => {
       if (code === 200) {
         const gitBranch = getGitBranch();
         const currentInfos = searchCurrentRepoPipe(gitBranch, data);
