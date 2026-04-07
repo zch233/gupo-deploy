@@ -46,7 +46,7 @@ const main = () => {
   }
   if (showSaberFlow) {
     console.log('---');
-    request(_responseURL).then(({ code, data }) => {
+    request(getSaberInfo(_responseURL)).then(({ code, data }) => {
       if (code === 200) {
         const gitBranch = getGitBranch();
         const currentInfos = searchCurrentRepoPipe(gitBranch, data);

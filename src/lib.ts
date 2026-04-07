@@ -202,6 +202,7 @@ export const searchCurrentRepoPipe = (gitBranch: string, data: any[]) => {
 export const getSaberInfo = (gitUrl: string) => `https://uat-api.group-ds.com/bmo-manage-api/innerapi/saber/repo-branches?repo_url=${ gitUrl }`;
 
 export const request = (url: string): Promise<{ code: number, data: any[] }> => new Promise((resolve) => {
+  debugLog('url:', url);
   https.get(url, res => {
     let responseData = '';
     res.on('data', (chunk) => {
