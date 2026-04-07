@@ -46,7 +46,7 @@ const main = () => {
   }
   if (showSaberFlow) {
     console.log('---');
-    request(`${_responseURL}&app_status=0`).then(({ code, data }) => {
+    request(_responseURL).then(({ code, data }) => {
       if (code === 200) {
         const gitBranch = getGitBranch();
         const currentInfos = searchCurrentRepoPipe(gitBranch, data);
@@ -83,7 +83,7 @@ const main = () => {
     let currentInfos = searchCurrentRepoPipe(gitBranch, configData[gitUrlHTTP]);
     new Promise((s) => {
       if (!currentInfos?.length || isAutoModeRefresh) {
-        request(getSaberInfo(gitUrlHTTP)).then(({ code, data }) => {
+        request(`${getSaberInfo(gitUrlHTTP)}&app_status=0`).then(({ code, data }) => {
           if (code === 200) {
             fs.writeFileSync(configPath, JSON.stringify({ ...configData, [gitUrlHTTP]: data }, null, 2), 'utf8');
             currentInfos = searchCurrentRepoPipe(gitBranch, data);
